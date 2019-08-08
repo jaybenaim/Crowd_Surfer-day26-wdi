@@ -6,6 +6,7 @@
 <p> {{project.funding_start_date}} to {{project.funding_end_date}} </p>
 <ul>
     {% for reward in rewards %}
+    {% if project.id == project.reward.id %} {% comment %} Something like this {% endcomment %}
     <li> 
     <p>{{reward.reward_item}} </p> 
     <p>{{reward.reward_description}} </p>

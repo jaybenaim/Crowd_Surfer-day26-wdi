@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html> 
+<head> 
+    <title>{% block title %} {% endblock %}</title> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" > 
+</head> 
+<body> 
+<header> 
+    <nav> 
+        
+        <ul>
+            <li> <a class="home-button" href="/">Home</a> </li>
+            {% if request.user.is_authenticated %}
+                <li class='login-name'>Logged in as {{ request.user.username }}</li>
+                <li><a class='logout-button' href="{% url 'logout' %}">Log out</a></li>
+            {% else %}
+                <li><a class='signup-button' href="{% url 'signup' %}">Sign up!</a></li>
+                <li><a class='login-button' href="{% url 'login' %}">Log in</a></li>
+            {% endif %}
+            
+            <li>
+                {% block nav %}
+                {% endblock %}
+            </li>
+             
+                
+            
+
+        </ul>
+        
+        
+        
+    </nav> 
+</header> 
+{% block content %}
+{% endblock %}
+</body> 
+</html>
+

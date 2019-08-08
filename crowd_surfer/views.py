@@ -41,12 +41,12 @@ def profile(request, id):
 
 def project_create(request):
     if request.method == 'GET':
-        context = {'form': ProjectForm(), 'action': '/project/create'}
+        context = {'form': ProjectForm(), 'action': '/projects/create'}
         return render(request, 'form.html', context)
     else:
         form = ProjectForm(request.POST)
         if  form.is_valid():
-            new_proj = form.save(commit=false)
+            new_proj = form.save(commit=False)
             new_proj.owner = request.user
             new_proj.save()
             return redirect(reverse('project_show', args=[new_proj.pk]))

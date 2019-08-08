@@ -7,12 +7,14 @@ from datetime import date
 from django import forms 
 from django.contrib.auth.models import User 
 
+
 class Project(models.Model): 
     title = models.CharField(max_length=255) 
     description = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     funding_start_date = models.DateField() 
-    funding_end_date = models.DateField() 
+    funding_end_date = models.DateField()
+    funding_goal = models.IntegerField() 
 
 class Reward(models.Model): 
     reward_type = models.CharField(max_length=255)

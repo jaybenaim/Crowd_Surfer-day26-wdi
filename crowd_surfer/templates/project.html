@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{project.title}}</h1>
+<h3> {{project.owner.username}} </h3>
+<p> {{project.description}}</p>
+<p> {{project.funding_start_date}} to {{project.funding_end_date}} </p>
+{% endblock %}

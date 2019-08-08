@@ -15,5 +15,5 @@ class ProjectForm(ModelForm):
 
     class Meta:
         model = Project
-        fields = ('title', 'description', 'funding_start_date', 'funding_end_date')
+        fields = ('title', 'description', 'funding_goal', 'funding_start_date', 'funding_end_date')
         

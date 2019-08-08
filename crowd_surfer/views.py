@@ -32,7 +32,9 @@ def signup_create(request):
         return render(request, 'registration/signup.html', {'form': form})
 
 def project_show(request, id):
-    context = {'project': Project.objects.get(pk=id)}
+    reward_form = RewardForm()
+    rewards = Reward.objects.order_by('-reward_amount')
+    context = {'project': Project.objects.get(pk=id), 'form': reward_form, 'rewards': rewards}
     return render(request, 'project.html', context)
 
 
@@ -50,10 +52,21 @@ def project_create(request):
             new_proj.owner = request.user
             new_proj.save()
             return redirect(reverse('project_show', args=[new_proj.pk]))
+        else:
+            context = {'form': form}
+            return render(request, 'form.html', context)
 
 def back_project(request, id):
     return redirect(reverse('project_create', args=['article.id']))
-    pass 
 
+
+def reward_create(request, id):
+    form = RewardForm(request.POST)
+    if form.is_valid():        
+        reward = form.save(commit=False)
+        project = Project.objects.get(pk=id)
+        reward.project = project
+        reward.save()
+        return redirect(reverse('project_show', args=[id]))
 
 

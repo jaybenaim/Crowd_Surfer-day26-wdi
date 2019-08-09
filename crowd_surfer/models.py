@@ -21,6 +21,7 @@ class Reward(models.Model):
     reward_item = models.CharField(max_length=255)
     reward_description = models.TextField(null=True)
     reward_amount = models.PositiveIntegerField()
+    reward_limit = models.PositiveIntegerField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="rewards")
     
 

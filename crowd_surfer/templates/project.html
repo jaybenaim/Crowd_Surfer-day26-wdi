@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class='project-container'> 
 <h1>{{project.title}}</h1>
 <h3> {{project.owner.username}} </h3>
 <p> {{project.description}}</p>
@@ -20,5 +21,6 @@
     {{ form.as_p }}
     <input type="submit" value="submit">
 </form>
+</div> 
 {% endif %}
 {% endblock %}

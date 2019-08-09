@@ -2,7 +2,17 @@
 
 {% block content %}
 
-<div class="background-img"></div>
+<main>
+    <div class="background-img"> 
+    </div> 
 
+
+<ul class='project-container'> 
+    {% for project in projects %}
+        <li class='all-projects'> <a class='all-projects' href="{% url 'project_show' project.id %}"> {{ project.title }}</a> </li> 
+    {% endfor %}
+
+</ul> 
+</main>
 
 {% endblock content %}

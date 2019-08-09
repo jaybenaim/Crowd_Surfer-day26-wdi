@@ -4,10 +4,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from datetime import datetime 
 from crowd_surfer.models import * 
-
 from django import forms 
 from crowd_surfer.forms import * 
-
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm 

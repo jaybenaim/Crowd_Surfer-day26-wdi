@@ -29,5 +29,5 @@ class RewardForm(ModelForm):
     
     class Meta:
         model= Reward
-        fields = ['reward_item', 'reward_description', 'reward_amount']
+        fields = ['reward_item', 'reward_description', 'reward_amount', 'reward_limit']
 

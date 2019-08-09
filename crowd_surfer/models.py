@@ -14,12 +14,15 @@ class Project(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     funding_start_date = models.DateField() 
     funding_end_date = models.DateField()
-    funding_goal = models.IntegerField() 
+    funding_goal = models.PositiveIntegerField()
+    
 
 class Reward(models.Model): 
-    reward_type = models.CharField(max_length=255)
     reward_item = models.CharField(max_length=255)
-    reward_amount = models.FloatField() 
+    reward_description = models.TextField(null=True)
+    reward_amount = models.PositiveIntegerField()
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="rewards")
+    
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) 
@@ -28,7 +31,7 @@ class Comment(models.Model):
     text = models.TextField() 
 
 class Donation(models.Model): 
-    amount = models.FloatField() 
+    amount = models.PositiveIntegerField() 
     reward = models.ForeignKey(Reward, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

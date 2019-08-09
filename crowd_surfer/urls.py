@@ -11,4 +11,5 @@ urlpatterns = [
     path('accounts/profile/', include('django.contrib.auth.urls')), 
     path('projects/create', project_create, name='project_create'),
     path('projects/<int:id>', project_show, name='project_show'),
+    path('projects/<int:id>/rewards/create', reward_create, name="reward_create"),
 ]

@@ -103,3 +103,22 @@ def reward_create(request, id):
         return redirect(reverse('project_show', args=[id]))
 
 
+
+def reward_delete(request, id):
+    ids = request.POST.getlist('delete_reward')
+    for reward_id in ids:
+        reward = Reward.objects.get(pk=reward_id)
+        reward.delete()
+
+    return redirect(reverse('project_show', args=[id]))
+    
+    
+    
+    
+    # for reward_id in ids:
+    #     print(reward_id)
+    #     reward = Reward.objects.get(pk=reward_id)
+    #     reward.delete()
+    
+
+

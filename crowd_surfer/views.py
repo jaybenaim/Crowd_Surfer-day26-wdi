@@ -31,7 +31,7 @@ def signup_create(request):
         login(request, new_user)
         return redirect('/')
     else: 
-        return render(request, 'registration/signup.html', {'form': form})
+        return render(request, 'index.html', {'form': form})
 
 def project_show(request, id):
     reward_form = RewardForm()

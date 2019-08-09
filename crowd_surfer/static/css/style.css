@@ -1,0 +1,83 @@
+main{
+    width:100%;
+    max-width: 100%;
+}
+
+nav{
+    background-color: grey;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 4em;
+}
+
+nav ul{
+    list-style: none;
+    white-space: nowrap;
+}
+
+nav ul li{
+    display: inline-block;
+    font-size: 1.5em;
+    margin-left: 2%;
+    margin-right: 2%
+}
+
+nav ul li a:hover{
+    border-bottom: 1px solid black;
+}
+
+nav ul li a{
+    text-decoration: none;
+    color: black;
+}
+
+.nav-left{
+    height: 100%;
+    grid-column-start: 1;
+    display: grid;
+    grid-template-columns: 4em auto;
+}
+
+.menu-wrap{
+    grid-column-start: 2;
+    display: inline-block;
+    width: 80%;
+}
+
+.nav-right{
+    display: flexbox;
+    align-content: flex-end;
+    height: 100%;
+    grid-column-start: 2;
+
+}
+
+.logo{
+    grid-column-start: 1;
+    height: 4em;
+    width: 4em
+}
+.logo img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.login-wrap{
+    width:80%;
+    float: right;
+}
+
+.login-bar{
+    box-sizing: border-box;
+}
+
+.background-img{
+    background-color: black;
+    background-image: url("https://www.bucketlist127.com/uploads/images/88ee4d1424e74e7175b1b55da5501d6f.jpg");
+    max-width:100%;
+    max-height: 100%;    
+    background-position: center;
+    background-size: cover;
+    display: block;
+
+}

@@ -3,7 +3,8 @@
 {% block content %}
 
 <main>
-    <div class="background-img"> 
+    <a href="{% url 'user_profile' request.user.id %}"> Profile </a> 
+        <div class="background-img"> 
     </div> 
 
     <ul class='project-container'> 

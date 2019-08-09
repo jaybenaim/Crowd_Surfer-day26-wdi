@@ -43,7 +43,8 @@ def project_show(request, id):
     return render(request, 'project.html', context)
 
 
-def profile(request, id):
+def user_profile(request, id):
+    return render(request, 'profile.html')
     pass
 
 def project_create(request):

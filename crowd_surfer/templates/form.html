@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <form class='project-container'action="{{action}}" method="POST">
+    <form class='project-container create-project'action="{{action}}" method="POST">
         {% csrf_token %}
         <p class='form-title'> Title: {{ form.title }}</p>
         <p class='form-description'> Description: {{ form.description }}</p> 

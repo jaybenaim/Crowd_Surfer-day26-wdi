@@ -3,11 +3,12 @@ main{
     max-width: 100%;
 }
 
-nav{
+nav {
     background-color: grey;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 4em;
+    height: 80px; 
 }
 
 nav ul{
@@ -78,6 +79,7 @@ main {
     height: 1000px; 
     width: 100%; 
     background-repeat: no-repeat; 
+    
 }
 
 .all-projects { 
@@ -85,6 +87,7 @@ main {
     color: white; 
     text-decoration: none; 
     list-style: none; 
+    padding-top: 40px; 
 }
 .all-projects:hover { 
     cursor: pointer; 
@@ -96,4 +99,10 @@ main {
     color: white; 
     display: block; 
     text-align: center; 
+}
+.project-page { 
+    padding-top: 30px; 
+}
+.create-project { 
+    padding-top: 50px; 
 }

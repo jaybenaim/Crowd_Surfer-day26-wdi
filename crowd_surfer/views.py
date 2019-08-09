@@ -1,7 +1,7 @@
 
 from django.http import HttpResponse, HttpResponseRedirect 
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.db.models import Sum, Aggregate
 from datetime import datetime 
 from crowd_surfer.models import * 
 from django import forms 
@@ -67,7 +67,8 @@ def project_show(request, id):
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
     donations = Donation.objects
-    context = {'project': Project.objects.get(pk=id), 'form': reward_form, 'rewards': rewards}
+    total_donations = Donation.objects.all().aggregate(Sum('amount'))
+    context = {'project': Project.objects.get(pk=id), 'form': reward_form, 'rewards': rewards, 'total_donations': total_donations['amount__sum']}
     return render(request, 'project.html', context)
 
 

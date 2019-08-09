@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% if request.user not in project.rewards.donations.users %}
-<div class="backed-header">
+{% if request.user in project.backers.all %}
+<div class='backed-header'>
     <h3> You have already backed this project</h3>
 </div>
 {% endif %}
+
 <div class='project-container'> 
 <h1>{{project.title}}</h1>
 <h3> {{project.owner.username}} </h3>
@@ -20,14 +21,11 @@
     <p>${{reward.reward_amount}} </p>
     {% comment %} {% if request.user != project.owner %} {% endcomment %}
 
-
-    {% comment %} IF USER HAS BACKED PROJECT, DONT SHOW THIS EITHER {% endcomment %}
-
-
+    {% if request.user not in project.backers.all %}
     <form action="{% url 'back_project' id=reward.pk %}">
         <input type="submit" value="Back Project">
     </form>
-    {% comment %} {% endif %} {% endcomment %}
+    {% endif %}
     </li>
     {% endfor %}
 </ul>

@@ -36,6 +36,7 @@ def signup_create(request):
 def project_show(request, id):
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
+    donations = Donation.objects
     context = {'project': Project.objects.get(pk=id), 'form': reward_form, 'rewards': rewards}
     return render(request, 'project.html', context)
 
@@ -68,6 +69,7 @@ def back_project(request, id):
         reward = Reward.objects.get(pk=id)
         user = User.objects.get(pk=request.user.pk)
         Donation.objects.create(amount = reward.reward_amount, user = user , reward=reward)
+        Project.objects.get(rewards__pk=id).backers.add(request.user)
         proj_id = reward.project.pk
         return redirect(reverse('project_show', args=[proj_id]))
         # Save reward and user to donations database

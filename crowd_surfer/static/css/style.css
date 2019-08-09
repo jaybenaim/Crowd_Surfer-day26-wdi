@@ -2,15 +2,12 @@ main{
     width:100%;
     max-width: 100%;
 }
-
 nav {
     background-color: grey;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 4em;
-    height: 80px; 
 }
-
 nav ul{
     list-style: none;
     white-space: nowrap;

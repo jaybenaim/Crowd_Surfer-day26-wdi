@@ -75,8 +75,6 @@ nav ul li a{
 }
 
 main {
-    background-color: black;
-    background: url("https://www.bucketlist127.com/uploads/images/88ee4d1424e74e7175b1b55da5501d6f.jpg");
     /* max-width:100%;
     max-height: 100%;     */
     /* background-position: center; */
@@ -87,9 +85,11 @@ main {
     width: 100%; 
     background-repeat: no-repeat; 
 
-    
+}
 
-
+.background-img{
+    background-color: black;
+    background: url("https://www.bucketlist127.com/uploads/images/88ee4d1424e74e7175b1b55da5501d6f.jpg");
 }
 
 h1 { 

@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from .forms import *
-# from .models import *
+from .models import *
 
 
 def root(request): 
@@ -33,7 +33,7 @@ def signup_create(request):
 
 def project_show(request, id):
     reward_form = RewardForm()
-    rewards = Reward.objects.order_by('-reward_amount')
+    rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
     context = {'project': Project.objects.get(pk=id), 'form': reward_form, 'rewards': rewards}
     return render(request, 'project.html', context)
 

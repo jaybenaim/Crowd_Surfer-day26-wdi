@@ -16,6 +16,7 @@
                 <ul class = "menu">
                     <li> <a class="home-button" href="/">Home</a> </li>
                     <li><a href="{% url 'project_create' %}">Create a new Project</a></li>
+                    <li><a href="{% url 'user_profile' request.user.id %}">Profile</a></li> 
                 </ul>
             </div>
         </div>        

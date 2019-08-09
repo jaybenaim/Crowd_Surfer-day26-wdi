@@ -22,6 +22,7 @@
                     </ul>
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="nav-right">
                 <div class="login-wrap">
                     <ul class="login-bar">
@@ -33,6 +34,13 @@
                         <li><a class='login-button' href="{% url 'login' %}">Log in</a></li>
                         {% endif %}
                 </div>
+=======
+            <div class="menu-wrap">
+                <ul class = "menu">
+                    <li> <a class="home-button" href="/">Home</a> </li>
+                    <li><a href="{% url 'project_create' %}">Create a new Project</a></li>
+                    <li><a href="{% url 'user_profile' request.user.id %}">Profile</a></li> 
+>>>>>>> user-profile
                 </ul>
 
             </div>

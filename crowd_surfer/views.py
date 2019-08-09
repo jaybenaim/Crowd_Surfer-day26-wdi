@@ -11,7 +11,9 @@ def root(request):
     return redirect('home/')
     
 def home(request): 
-    return render(request, 'index.html')
+    projects = Project.objects.all() 
+    context = { 'projects': projects }
+    return render(request, 'index.html', context)
     
 def login_view(request):
     if request.user.is_authenticated:

@@ -1,27 +1,50 @@
+
 from django.http import HttpResponse, HttpResponseRedirect 
 from django.shortcuts import render, redirect, get_object_or_404
+
 from datetime import datetime 
 from crowd_surfer.models import * 
-from crowd_surfer.forms import *
 from django import forms 
+from crowd_surfer.forms import * 
 from django.contrib.auth.decorators import login_required 
-from django.contrib.auth import login 
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm 
-from django.contrib.auth import authenticate
-from django.urls import reverse 
 
+from django.urls import reverse 
 
 def root(request): 
     return redirect('home/')
     
 def home(request): 
-    projects = Project.objects.all() 
-    context = { 'projects': projects }
-    return render(request, 'index.html', context)
+    return render(request, 'index.html', {
+        'projects': Project.objects.all() 
+    })
     
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('/')
+    
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            
+            username = form.cleaned_data['username']
+            pw = form.cleaned_data['password']
+            
+            user = authenticate(username=username, password=pw)
+            
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('/home')
+            else:
+                form.add_error('username', 'Login failed')
+    else:
+        form = LoginForm()
+
+    return render(request, 'login.html', {
+        'form': form
+    }) 
+
 
 def signup(request):
     form = UserCreationForm() 
@@ -37,6 +60,9 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
+
+
+
 def project_show(request, id):
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
@@ -46,7 +72,7 @@ def project_show(request, id):
 
 def user_profile(request, id):
     return render(request, 'profile.html')
-    pass
+    
 
 def project_create(request):
     if request.method == 'GET':

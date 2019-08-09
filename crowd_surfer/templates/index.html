@@ -3,18 +3,15 @@
 {% block content %}
 
 <main>
-    {% if request.user.is_authenticated %}
-    <a href="{% url 'user_profile' request.user.id %}"> Profile </a> 
-        <div class="background-img"> 
+    <div class="background-img">
+        <ul class='project-container'> 
+            {% for project in projects %}
+                <li class='project'>
+                    <a href="{% url 'project_show' project.id %}"> {{ project.title }}</a>
+                </li> 
+            {% endfor %}
+        </ul> 
     </div> 
-    {% endif %}
-
-    <ul class='project-container'> 
-        {% for project in projects %}
-            <li class='all-projects'> <a class='all-projects' href="{% url 'project_show' project.id %}"> {{ project.title }}</a> </li> 
-        {% endfor %}
-
-    </ul> 
 </main>
 
 {% endblock content %}

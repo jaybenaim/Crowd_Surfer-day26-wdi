@@ -3,37 +3,42 @@
 <head> 
     <title>{% block title %} {% endblock %}</title> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{% static 'style.css' %}" > 
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" > 
 </head> 
 <body> 
 <header> 
     <nav> 
-        
-        <ul>
-            <li> <a class="home-button" href="/">Home</a> </li>
-            {% if request.user.is_authenticated %}
-                <li class='login-name'>Logged in as {{ request.user.username }}</li>
-                <li><a class='logout-button' href="{% url 'logout' %}">Log out</a></li>
-            {% else %}
-                <li><a class='signup-button' href="{% url 'signup' %}">Sign up!</a></li>
-                <li><a class='login-button' href="{% url 'login' %}">Log in</a></li>
-            {% endif %}
-            
-            <li>
-                {% block nav %}
-                {% endblock %}
-            </li>
-                
-            
+        <div class="nav-left">
+            <div class="logo">
+                <img src="{% static 'img/logo.png' %}" alt="">
+            </div>
+            <div class="menu-wrap">
+                <ul class = "menu">
+                    <li> <a class="home-button" href="/">Home</a> </li>
+                    <li><a href="{% url 'project_create' %}">Create a new Project</a></li>
+                </ul>
+            </div>
+        </div>        
+        <div class="nav-right">
+            <div class="login-wrap">
+            <ul class = "login-bar">
+                {% if request.user.is_authenticated %}
+                    <li class='login-name'>Logged in as {{ request.user.username }}</li>
+                    <li><a class='logout-button' href="{% url 'logout' %}">Log out</a></li>
+                {% else %}
+                    <li><a class='signup-button' href="{% url 'signup' %}">Sign up!</a></li>
+                    <li><a class='login-button' href="{% url 'login' %}">Log in</a></li>
+                {% endif %}
+                </div>
+            </ul>
 
-        </ul>
-        
-        
-        
-    </nav> 
+        </div>
+        </nav> 
 </header> 
+<main>
 {% block content %}
 {% endblock %}
+</main>
 </body> 
 </html>
 

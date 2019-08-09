@@ -1,10 +1,13 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, reverse, redirect, get_object_or_404
-from django.views.decorators.http import require_http_methods
-from .forms import *
-from .models import *
+from django.http import HttpResponse, HttpResponseRedirect 
+from django.shortcuts import render, redirect, get_object_or_404
+from datetime import datetime 
+from crowd_surfer.models import * 
+from django import forms 
+from django.contrib.auth.decorators import login_required 
+from django.contrib.auth import login 
+from django.contrib.auth.forms import UserCreationForm 
+from django.contrib.auth import authenticate
+from django.urls import reverse 
 
 
 def root(request): 
@@ -40,7 +43,8 @@ def project_show(request, id):
     return render(request, 'project.html', context)
 
 
-def profile(request, id):
+def user_profile(request, id):
+    return render(request, 'profile.html')
     pass
 
 def project_create(request):

@@ -2,15 +2,12 @@ main{
     width:100%;
     max-width: 100%;
 }
-
 nav {
     background-color: grey;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 4em;
-    height: 80px; 
 }
-
 nav ul{
     list-style: none;
     white-space: nowrap;
@@ -71,17 +68,14 @@ nav ul li a{
 .login-bar{
     box-sizing: border-box;
 }
-
 main {
-    margin-top: -20px; 
+    margin-top: 0px; 
     background: url("https://www.bucketlist127.com/uploads/images/88ee4d1424e74e7175b1b55da5501d6f.jpg");
     background-size: cover; 
     height: 1000px; 
     width: 100%; 
     background-repeat: no-repeat; 
-    
 }
-
 .all-projects { 
     font-size: 30px; 
     color: white; 

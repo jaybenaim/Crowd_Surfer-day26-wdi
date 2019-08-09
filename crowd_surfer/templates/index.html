@@ -1,7 +1,18 @@
 {% extends 'base.html'%}
-{% block title %}
-{{ project.name }}
-{% endblock %}
+
 {% block content %}
-{{ project.name }}
-{% endblock%}
+
+<main>
+    <div class="background-img"> 
+    </div> 
+
+
+<ul class='project-container'> 
+    {% for project in projects %}
+        <li class='all-projects'> <a class='all-projects' href="{% url 'project_show' project.id %}"> {{ project.title }}</a> </li> 
+    {% endfor %}
+
+</ul> 
+</main>
+
+{% endblock content %}

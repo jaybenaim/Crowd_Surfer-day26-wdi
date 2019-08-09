@@ -71,13 +71,25 @@ nav ul li a{
     box-sizing: border-box;
 }
 
-.background-img{
+main {
     background-color: black;
-    background-image: url("https://www.bucketlist127.com/uploads/images/88ee4d1424e74e7175b1b55da5501d6f.jpg");
-    max-width:100%;
-    max-height: 100%;    
-    background-position: center;
-    background-size: cover;
-    display: block;
+    background: url("https://www.bucketlist127.com/uploads/images/88ee4d1424e74e7175b1b55da5501d6f.jpg");
+    /* max-width:100%;
+    max-height: 100%;     */
+    /* background-position: center; */
+    /* background-size: cover; */
+    /* display: block; */
+    background-size: cover; 
+    height: 500px; 
+    width: 100%; 
+    background-repeat: no-repeat; 
+
+    
+
+
+}
+
+h1 { 
+    color: red; 
 
 }

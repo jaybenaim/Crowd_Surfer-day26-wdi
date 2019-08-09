@@ -72,9 +72,10 @@ nav ul li a{
 }
 
 main {
+    margin-top: -20px; 
     background: url("https://www.bucketlist127.com/uploads/images/88ee4d1424e74e7175b1b55da5501d6f.jpg");
     background-size: cover; 
-    height: 500px; 
+    height: 1000px; 
     width: 100%; 
     background-repeat: no-repeat; 
 }

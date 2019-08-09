@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class='project-container project-page'> 
+<div class='form-container project-page'> 
     {% if request.user == project.owner %}
         <h3> Owner: {{project.owner.username}} </h3>
     {% endif %}

@@ -3,9 +3,11 @@
 {% block content %}
 
 <main>
+    {% if request.user.is_authenticated %}
     <a href="{% url 'user_profile' request.user.id %}"> Profile </a> 
         <div class="background-img"> 
     </div> 
+    {% endif %}
 
     <ul class='project-container'> 
         {% for project in projects %}

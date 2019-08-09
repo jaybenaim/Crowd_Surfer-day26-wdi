@@ -28,5 +28,5 @@ class RewardForm(ModelForm):
     reward_description = CharField(widget = Textarea(attrs={'rows':4, 'cols':15}))
     class Meta:
         model= Reward
-        fields = ['reward_item', 'reward_description', 'reward_amount']
+        fields = ['reward_item', 'reward_description', 'reward_amount', 'reward_limit']
 

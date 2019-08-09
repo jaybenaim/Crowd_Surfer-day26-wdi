@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from datetime import datetime 
 from crowd_surfer.models import * 
+from crowd_surfer.forms import *
 from django import forms 
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth import login 

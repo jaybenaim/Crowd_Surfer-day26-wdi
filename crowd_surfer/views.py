@@ -71,7 +71,10 @@ def project_show(request, id):
 
 
 def user_profile(request, id):
-    return render(request, 'profile.html')
+    projects = Project.objects.filter(owner_id=id)
+    return render(request, 'profile.html', { 
+        'projects': projects 
+    })
     
 
 def project_create(request):

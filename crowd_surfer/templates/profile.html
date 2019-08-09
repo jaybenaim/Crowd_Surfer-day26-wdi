@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{ request.user.username }}
+<div> 
+    <h2 class='profile-name'> {{ request.user.username }}'s Projects:  <h2> 
+    {% for project in projects%} 
+        <h3 class='profile-projects'>{{project.title }} </h3> 
+    {% endfor %}
+    
+
+</div> 
+
+
+
 
 {% endblock %}
+
+<!-- 3. As a user I should be able to visit my profile page and see a list of all the projects I have backed, the total amount I have pledged on the site, and a list of all the projects I own
+4. As a user, I should be able to visit a different user's profile and see their bio and a list of projects they own
+-->

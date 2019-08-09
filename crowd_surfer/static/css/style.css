@@ -99,3 +99,8 @@ main {
     display: block; 
     text-align: center; 
 }
+
+.backed-header{
+    width: 100%;
+    background-color: yellow;
+}

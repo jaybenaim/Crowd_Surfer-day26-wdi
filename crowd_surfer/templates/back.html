@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>You are choosing to back {{ project_title }}</h1>
+
+
+<h2>for ${{ reward.reward_amount }}, you will recieve: {{ reward.reward_item }}</h2>
+<h3> {{ reward.reward_description }} </h3>
+
+<form action="{% url 'back_project' reward.pk%}" method="POST">
+    {% csrf_token %}    
+    <input type="submit" value="Confirm" >
+    
+</form>
+
+
+{% endblock content %}
+
+

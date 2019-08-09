@@ -59,7 +59,19 @@ def project_create(request):
             return render(request, 'form.html', context)
 
 def back_project(request, id):
-    return redirect(reverse('project_create', args=['article.id']))
+    if request.method == 'GET':
+        project_title = Reward.objects.filter(pk=id).first().project.title
+        reward = Reward.objects.get(pk=id)
+        context = {'project_title': project_title, 'reward': reward }
+        return render(request, 'back.html', context)
+    elif request.method == 'POST':
+        reward = Reward.objects.get(pk=id)
+        user = User.objects.get(pk=request.user.pk)
+        Donation.objects.create(amount = reward.reward_amount, user = user , reward=reward)
+        proj_id = reward.project.pk
+        return redirect(reverse('project_show', args=[proj_id]))
+        # Save reward and user to donations database
+        # redirect to project page
 
 
 def reward_create(request, id):

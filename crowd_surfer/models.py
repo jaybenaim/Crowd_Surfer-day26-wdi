@@ -15,7 +15,7 @@ class Project(models.Model):
     funding_start_date = models.DateField() 
     funding_end_date = models.DateField()
     funding_goal = models.PositiveIntegerField()
-    
+    backers= models.ManyToManyField(User, related_name="projects_backed")
 
 class Reward(models.Model): 
     reward_item = models.CharField(max_length=255)
@@ -33,7 +33,7 @@ class Comment(models.Model):
 
 class Donation(models.Model): 
     amount = models.PositiveIntegerField() 
-    reward = models.ForeignKey(Reward, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name="donations")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
 
 

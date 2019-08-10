@@ -4,8 +4,19 @@
 <div> 
     <h2 class='profile-name'> {{ request.user.username }}'s Projects:  <h2> 
     {% for project in projects%} 
-        <h3 class='profile-projects'>{{project.title }} </h3> 
+    <a href="{% url 'project_show' project.id %}"> <h3 class='profile-projects'>{{project.title }} </h3> </a>
     {% endfor %}
+    <ul class='backers-profile'> 
+     <h3> Backers: <span> {{ project.backers.count }}</span> </h3> 
+    {% for project in projects %}
+       <li><a href="{% url 'profile_show' user.id %}" >Name: {{project.backers.name}}<a></li> 
+       <h2>$ current $ </h2> 
+       <li>Funding Goal: {{project.funding_goal}}</li> 
+       <li>Funding Start Date: {{project.funding_start_date}}</li> 
+       <li>Funding End Date: {{project.funding_end_date}}</li> 
+       <br /> 
+    {% endfor %}
+    </ul> 
 
 </div> 
 

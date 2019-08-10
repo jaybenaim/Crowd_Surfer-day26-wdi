@@ -36,4 +36,3 @@ class Donation(models.Model):
     reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name="donations")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
 
-

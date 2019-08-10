@@ -60,9 +60,6 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
-
-
-
 def project_show(request, id):
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
@@ -71,12 +68,22 @@ def project_show(request, id):
     return render(request, 'project.html', context)
 
 
-def user_profile(request, id):
+def profile_show(request, id):
     projects = Project.objects.filter(owner_id=id)
     return render(request, 'profile.html', { 
-        'projects': projects 
+        'projects': projects, 
     })
     
+def profiles(request): 
+    users = User.objects.all()
+    projects = Project.objects.all() 
+    context = { 
+        'users': users, 
+        'projects': projects, 
+      
+    }
+    return render(request, 'profiles.html', context)
+
 
 def project_create(request):
     if request.method == 'GET':

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content%}
+    <p> {{request.user.profile}}
+    </p>
+    <ul class="form-container"> 
+
+        {% for user in users %}
+            <li> <a class='profiles-users' href="{% url 'profile_show' user.id %}"> Username: {{user}}  </a></li> 
+            <span> Bio </span>
+
+        {% endfor %}
+       
+      
+        
+    </ul>
+{% endblock %}

@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 class Project(models.Model): 
     title = models.CharField(max_length=255) 
     description = models.TextField()
+    category = models.CharField(max_length=63) 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     funding_start_date = models.DateField() 
     funding_end_date = models.DateField()

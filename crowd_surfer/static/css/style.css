@@ -140,3 +140,18 @@ li.project > a {
     text-align: center; 
 
 }
+
+#search_box{
+    width: 6em;
+    background: rgba(255, 255, 255, 0.5); 
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+#search_submit{
+    border: 1px solid grey;
+    border-radius: 5px;
+    color:white;
+    padding: 2px 8px 2px 8px;
+    background: rgba(0, 0, 0, 0.7); 
+}

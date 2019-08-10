@@ -15,4 +15,5 @@ urlpatterns = [
     path('projects/<int:id>', project_show, name='project_show'),
     path('projects/<int:id>/rewards/create', reward_create, name="reward_create"),
     path('rewards/<int:id>/back', back_project, name='back_project'),
+    path('search/', search, name='search')
 ]

@@ -19,6 +19,15 @@
                     <ul class="menu">
                         <li> <a class="home-button" href="/">Home</a> </li>
                         <li><a href="{% url 'project_create' %}">Create a new Project</a></li>
+                        <li>
+
+                        <form action="{% url 'search' %}" method="GET" >
+                        <input  id="search_box" type="text" name="query"  placeholder="Search..." >
+                        <button id="search_submit" type="submit" >Search</button>
+                        </form>
+                        
+                        
+                        </li>
                     </ul>
                 </div>
             </div>

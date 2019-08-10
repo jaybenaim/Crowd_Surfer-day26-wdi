@@ -4,7 +4,8 @@
     <form class='form-container create-project'action="{{action}}" method="POST">
         {% csrf_token %}
         <p class='form-title'> Title: {{ form.title }}</p>
-        <p class='form-description'> Description: {{ form.description }}</p> 
+        <p class='form-description'> Description: {{ form.description }}</p>
+        <p class='form-category'> Category: {{ form.category }}</p>  
         <p class='form-funding-goal'>Funding Goal: {{ form.funding_goal }} </p> 
         <p class='form-funding-start-date'>Funding Start Date: {{form.funding_start_date}} </p> 
         <p class='form-funding-end-date'>Funding End Date: {{form.funding_end_date}}</p> 

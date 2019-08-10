@@ -9,7 +9,7 @@ from crowd_surfer.forms import *
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm 
-
+from django.db.models import Q
 from django.urls import reverse 
 
 def root(request): 
@@ -121,3 +121,9 @@ def reward_create(request, id):
         return redirect(reverse('project_show', args=[id]))
 
 
+def search(request):
+    if request.method == 'GET':
+        query = request.GET['query']
+        search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query))
+        context = {'projects': search_results, 'query':query}
+        return render(request, 'search.html', context)

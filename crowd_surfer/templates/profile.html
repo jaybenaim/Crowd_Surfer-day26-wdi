@@ -8,9 +8,10 @@
     {% endfor %}
     <ul class='backers-profile'> 
         <h3> Backers: <span> {{ backers_count}}</span> </h3>  
+        <h2> Total Pleged CA${{ funding }} </h2> 
+
         {% for project in projects %}
             <li><a href="{% url 'profile_show' user.id %}" >Name: {{project.backers.name}}<a></li> 
-            <h2>$ current $ </h2> 
             <li>Funding Goal: {{project.funding_goal}}</li> 
             <li>Funding Start Date: {{project.funding_start_date}}</li> 
             <li>Funding End Date: {{project.funding_end_date}}</li> 

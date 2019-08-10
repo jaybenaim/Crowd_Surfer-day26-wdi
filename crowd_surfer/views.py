@@ -85,7 +85,18 @@ def profiles(request):
     }
     return render(request, 'profiles.html', context)
 
-
+def profile_search(request): 
+    query = request.GET['query']
+    search_results = User.objects.get(username=query) 
+    context = { 
+        'picture': search_results, 
+        'query': query,
+    }
+    try: 
+        return redirect(reverse('profile_show', args=[search_results.id]))
+    except: 
+        return redirect('users/profiles')
+   
 def project_create(request):
     if request.method == 'GET':
         context = {'form': ProjectForm(), 'action': '/projects/create'}

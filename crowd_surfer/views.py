@@ -71,8 +71,18 @@ def project_show(request, id):
 
 def profile_show(request, id):
     projects = Project.objects.filter(owner_id=id)
+    projects_backed = 0
+    project_counter = 0
+    funding = 0
+
+    for project in projects: 
+        project_counter += 1
+        
+
     return render(request, 'profile.html', { 
         'projects': projects, 
+        'project_counter': project_counter,
+        
     })
     
 def profiles(request): 

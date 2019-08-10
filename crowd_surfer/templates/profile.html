@@ -2,7 +2,7 @@
 
 {% block content %}
 <div> 
-    {% for project in projects%} 
+    {% for project in projects %} 
         <div class='profile-projects'> 
             <a href="{% url 'project_show' project.id %}"> 
             <h3 class='project-title-profile'> {{project.title }} <h3> 

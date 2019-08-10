@@ -1,6 +1,6 @@
 {% extends 'base.html'%}
 {% block nav %}
-    <a href="{% url 'user_profile' request.user.id %}"> My Profile </a> 
+
 {% endblock %}  
 
 {% block content %}
@@ -8,11 +8,13 @@
 <main>
     <div class="background-img">
         <ul class='project-container'> 
+        {% if request.user.project != None %}
             {% for project in projects %}
                 <li class='project'>
                     <a href="{% url 'project_show' project.id %}"> {{ project.title }}</a>
                 </li> 
             {% endfor %}
+            {% endif %}
         </ul> 
     </div> 
 </main>

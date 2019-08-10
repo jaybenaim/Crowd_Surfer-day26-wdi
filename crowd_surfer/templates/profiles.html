@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content%}
+     <form class="form" action="{% url 'profile_search' %}" method="get"> 
+            <label for="picture-search"> 
+                <span>Search: </span> 
+                <input type='search' id="user-search" name="query" value="{{ query }}" />
+            </label>
+
+            <input type="submit" value="Search" />
+        </form> 
+    <p> {{request.user.profile}}
+    </p>
+    <ul class="form-container"> 
+
+        {% for user in users %}
+            <li> <a class='profiles-users' href="{% url 'profile_show' user.id %}"> Username: {{user}}  </a></li> 
+            <span> Bio </span>
+
+        {% endfor %}
+       
+      
+        
+    </ul>
+{% endblock %}

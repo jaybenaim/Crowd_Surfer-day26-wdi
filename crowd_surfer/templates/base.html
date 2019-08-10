@@ -19,6 +19,13 @@
                     <ul class="menu">
                         <li> <a class="home-button" href="/">Home</a> </li>
                         <li><a href="{% url 'project_create' %}">Create a new Project</a></li>
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'profile_show' request.user.id %}"> My Profile </a></li> 
+                            <li><a href="{% url 'profiles' %}" > Profiles </a></li> 
+                        {% else %}
+                            <li><a href="{% url 'profiles' %}" > Profiles </a></li> 
+                        {% endif %}
+
                     </ul>
                 </div>
             </div>

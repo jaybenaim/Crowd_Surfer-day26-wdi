@@ -60,9 +60,6 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
-
-
-
 def project_show(request, id):
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
@@ -72,13 +69,37 @@ def project_show(request, id):
     return render(request, 'project.html', context)
 
 
-def user_profile(request, id):
+def profile_show(request, id):
     projects = Project.objects.filter(owner_id=id)
     return render(request, 'profile.html', { 
-        'projects': projects 
+        'projects': projects, 
     })
     
+def profiles(request): 
+    users = User.objects.all()
+    projects = Project.objects.all() 
+    context = { 
+        'users': users, 
+        'projects': projects, 
+      
+    }
+    return render(request, 'profiles.html', context)
 
+def profile_search(request): 
+    query = request.GET['query']
+     # objects.get will throw an error if it doesnt find any results. depending on what your're 
+     # trying to do using filter, and .first() (assuming you only want one result)
+     # is a much more common practice
+    search_results = User.objects.filter(username__icontains=query).first() 
+    context = { 
+        'picture': search_results, 
+        'query': query,
+    }
+    try: 
+        return redirect(reverse('profile_show', args=[search_results.id]))
+    except: 
+        return redirect('users/profiles')
+   
 def project_create(request):
     if request.method == 'GET':
         context = {'form': ProjectForm(), 'action': '/projects/create'}

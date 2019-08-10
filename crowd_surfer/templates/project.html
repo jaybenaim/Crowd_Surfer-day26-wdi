@@ -1,8 +1,9 @@
+
 {% extends 'base.html' %}
 {% block content %}
 {% if request.user in project.backers.all %}
 <div class='backed-header'>
-    <h3> You have already backed this project</h3>
+   <h3> You have already backed this project</h3>
 </div>
 {% endif %}
 <div class='form-container project-page'> 
@@ -36,4 +37,5 @@
     </form>
     {% endif %} 
 </div> 
+
 {% endblock %}

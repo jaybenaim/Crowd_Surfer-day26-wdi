@@ -87,7 +87,7 @@ def profiles(request):
 
 def profile_search(request): 
     query = request.GET['query']
-    search_results = User.objects.get(username=query) 
+    search_results = User.objects.filter(username__icontains=query).first() 
     context = { 
         'picture': search_results, 
         'query': query,

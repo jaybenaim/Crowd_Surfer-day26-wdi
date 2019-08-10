@@ -6,9 +6,8 @@
         <div class='profile-projects'> 
             <a href="{% url 'project_show' project.id %}"> 
             <h3 class='project-title-profile'> {{project.title }} <h3> 
-            <li>Funding Goal: {{project.funding_goal}}</li> 
-            <li>Funding Start Date: {{project.funding_start_date}}</li> 
-            <li>Funding End Date: {{project.funding_end_date}}</li> 
+            <li>Funding Goal: $ {{project.funding_goal}}</li> 
+            <li>Funding Date: {{project.funding_start_date}} - {{project.funding_end_date}} </li> 
             </a>
             <br /> 
             <li>Backers Username:</li> 

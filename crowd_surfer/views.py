@@ -75,11 +75,10 @@ def project_show(request, id):
         'form': reward_form,
         'rewards': rewards, 
         'total_donations': total_donations['amount__sum'], 
-        'delta': delta.days, 
+        'delta': delta,
         }
 
     return render(request, 'project.html', context)
-
 
 def profile_show(request, id):
     projects = Project.objects.filter(owner_id=id)

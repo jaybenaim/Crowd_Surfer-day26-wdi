@@ -87,6 +87,9 @@ def profiles(request):
 
 def profile_search(request): 
     query = request.GET['query']
+     # objects.get will throw an error if it doesnt find any results. depending on what your're 
+     # trying to do using filter, and .first() (assuming you only want one result)
+     # is a much more common practice
     search_results = User.objects.filter(username__icontains=query).first() 
     context = { 
         'picture': search_results, 

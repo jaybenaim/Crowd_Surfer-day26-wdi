@@ -74,15 +74,15 @@ def profile_show(request, id):
     projects_backed = 0
     project_counter = 0
     funding = 0
-    
+
     for project in projects: 
         project_counter += 1
-        funding += project.funding_goal
+        
 
     return render(request, 'profile.html', { 
         'projects': projects, 
         'project_counter': project_counter,
-        'funding': funding,
+        
     })
     
 def profiles(request): 

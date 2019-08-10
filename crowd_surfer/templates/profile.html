@@ -8,7 +8,7 @@
     {% endfor %}
     <ul class='backers-profile'> 
         <h3> Projects: <span> {{ project_counter }}</span> </h3>  
-        <h2> Total Pleged CA${{ funding }} </h2> 
+       
 
         {% for project in projects %}
             <li><a href="{% url 'project_show' project.id %}">Project Title: {{project.title}}</li> 
@@ -17,7 +17,7 @@
             <li>Funding End Date: {{project.funding_end_date}}</li> 
             <br /> 
         {% endfor %}
-        
+
     </ul> 
 
 </div> 

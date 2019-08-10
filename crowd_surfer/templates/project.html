@@ -6,32 +6,36 @@
    <h3> You have already backed this project</h3>
 </div>
 {% endif %}
-<div class='form-container project-page'>
-       <h3> Owner: {{project.owner.username}} </h3>
-   <h1>{{project.title}}</h1>
-   <p> {{project.description}}</p>
-   <p> {{project.funding_start_date}} to {{project.funding_end_date}} </p>
-   <ul>
-       {% for reward in rewards %}
-       <li>
-       <p>{{reward.reward_item}} </p>
-       <p>{{reward.reward_description}} </p>
-       <p>${{reward.reward_amount}} </p>
-       <p>{{reward.reward_limit}} </p>
-       {% if request.user not in project.backers.all and request.user != project.owner %}
-        <form action="{% url 'back_project' reward.pk %}"> 
-        <button class='back-project-button' type='submit'> Back Project </button> 
-       </form>
-       {% endif %}
-       </li>
-       {% endfor %}
-   </ul>
-   {% if request.user == project.owner %}
-   <form action="{% url 'reward_create' project.pk %}">
-       {% csrf_token %}
-       {{ form.as_p }}
-    <button class='get-reward-button' type='submit'> Add Reward </button> 
-   </form>
-   {% endif %}
-</div>
+<div class='form-container project-page'> 
+        <h3> Owner: {{project.owner.username}} </h3>
+    <h1>{{project.title}}</h1>
+    <p> {{project.description}}</p>
+    <p> {{project.funding_start_date}} to {{project.funding_end_date}} </p>
+
+    <p>Total Amount Pledged To Date: ${{ total_donations }}</p>
+    
+    <ul>
+        {% for reward in rewards %}
+        <li> 
+        <p>{{reward.reward_item}} </p> 
+        <p>{{reward.reward_description}} </p>
+        <p>${{reward.reward_amount}} </p>
+        <p>{{reward.reward_limit}} </p>
+        {% if request.user not in project.backers.all %}
+         <form action="{% url 'back_project' id=reward.pk %}">
+        <input type="submit" value="Back Project">
+        </form>
+        {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% if request.user == project.owner %} 
+    <form action="{% url 'reward_create' project.pk %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="submit">
+    </form>
+    {% endif %} 
+</div> 
+
 {% endblock %}

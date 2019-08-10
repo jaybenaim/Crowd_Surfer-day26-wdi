@@ -71,18 +71,10 @@ def project_show(request, id):
 
 def profile_show(request, id):
     projects = Project.objects.filter(owner_id=id)
-    projects_backed = 0
-    project_counter = 0
-    funding = 0
-
-    for project in projects: 
-        project_counter += 1
-        
-
+    backers = Project.backers
     return render(request, 'profile.html', { 
         'projects': projects, 
-        'project_counter': project_counter,
-        
+        'backers': backers,
     })
     
 def profiles(request): 
@@ -97,7 +89,7 @@ def profiles(request):
 
 def profile_search(request): 
     query = request.GET['query']
-    search_results = User.objects.get(username=query) 
+    search_results = User.objects.filter(username__icontains=query).first() 
     context = { 
         'picture': search_results, 
         'query': query,

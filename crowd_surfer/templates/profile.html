@@ -10,8 +10,17 @@
             <li>Funding Start Date: {{project.funding_start_date}}</li> 
             <li>Funding End Date: {{project.funding_end_date}}</li> 
             </a>
+            <br /> 
+            <li>Backers Username:</li> 
+            <br /> 
+            {% for backer in project.backers.all %}
+                 <li> <a class='profiles-users' href="{% url 'profile_show' backer.id %}">  {{backer}}  </a></li> 
+            {% endfor %}
+           
+            
         </div> 
     {% endfor %}
+   
 </div> 
 {% endblock %}
 

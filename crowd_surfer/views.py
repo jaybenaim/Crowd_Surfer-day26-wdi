@@ -167,6 +167,27 @@ def reward_create(request, id):
         return redirect(reverse('project_show', args=[id]))
 
 
+<<<<<<< HEAD
+
+def reward_delete(request, id):
+    ids = request.POST.getlist('delete_reward')
+    for reward_id in ids:
+        reward = Reward.objects.get(pk=reward_id)
+        reward.delete()
+
+    return redirect(reverse('project_show', args=[id]))
+    
+    
+    
+    
+    # for reward_id in ids:
+    #     print(reward_id)
+    #     reward = Reward.objects.get(pk=reward_id)
+    #     reward.delete()
+    
+
+
+=======
 @login_required 
 def create_comment(request): 
     params = request.POST 
@@ -188,3 +209,4 @@ def search(request):
         search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query))
         context = {'projects': search_results, 'query':query}
         return render(request, 'search.html', context)
+>>>>>>> 2e9a104f55d12bd16f2b0b7f2628b4e346f4f1b5

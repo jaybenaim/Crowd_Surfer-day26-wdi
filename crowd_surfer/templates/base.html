@@ -22,8 +22,11 @@
                         <li>
 
                         <form action="{% url 'search' %}" method="GET" >
-                        <input  id="search_box" type="text" name="query"  placeholder="Search..." >
+
+                            <input  id="search_box" type="text" name="query" value="{{query}}" placeholder="Search..." >
+
                         <button id="search_submit" type="submit" >Search</button>
+
                         </form>
                         
                         
@@ -34,13 +37,13 @@
                         {% else %}
                             <li><a href="{% url 'profiles' %}" > Profiles </a></li> 
                         {% endif %}
-                        <form class="search-form" action="{% url 'profile_search' %}" method="get"> 
+                        <!-- <form class="search-form" action="{% url 'profile_search' %}" method="get"> 
                             <label for="picture-search"> 
                                 <span>Search: </span> 
                                 <input type='search' id="user-search" name="query" value="{{ query }}" />
                             </label>
                             <input type="submit" value="Search" />
-                        </form> 
+                        </form>  -->
 
                     </ul>
                 </div>

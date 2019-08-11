@@ -11,7 +11,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm 
 from django.db.models import Q
 import datetime
-
+import pdb
 from django.urls import reverse 
 
 def root(request): 
@@ -168,6 +168,36 @@ def reward_create(request, id):
 def search(request):
     if request.method == 'GET':
         query = request.GET['query']
-        search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query)|Q(tags__name__icontains=query))
-        context = {'projects': search_results, 'query':query}
+        search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query))
+        result_categories = []
+        result_tags = []
+        for project in search_results:
+            if project.category not in result_categories:
+                result_categories.append(project.category)
+            for tag in project.tags.names():
+                if tag not in result_tags:
+                    result_tags.append(tag)
+        context = {'projects': search_results, 'query':query, 'categories': result_categories, 'tags':result_tags}
         return render(request, 'search.html', context)
+
+def search_refine(request):
+    query = request.method == 'GET'
+    query = request.GET['query']
+    result_categories = []
+    result_tags = []
+    category_list = request.GET.getlist('category_check')
+    tag_list = request.GET.getlist('tag_check')
+    search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query))
+    if len(category_list) != 0:
+        search_results = search_results.filter(category__in=category_list)
+    if len(tag_list) != 0:
+        search_results = search_results.filter(tags__name__in=tag_list)
+
+    for project in search_results:
+        if project.category not in result_categories:
+            result_categories.append(project.category)
+        for tag in project.tags.names():
+            if tag not in result_tags:
+                result_tags.append(tag)
+    context = {'projects': search_results, 'query':query, 'categories': result_categories, 'tags':result_tags}
+    return render(request, 'search.html', context)

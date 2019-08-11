@@ -168,6 +168,6 @@ def reward_create(request, id):
 def search(request):
     if request.method == 'GET':
         query = request.GET['query']
-        search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query))
+        search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query)|Q(tags__name__icontains=query))
         context = {'projects': search_results, 'query':query}
         return render(request, 'search.html', context)

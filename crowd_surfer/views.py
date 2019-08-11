@@ -1,7 +1,7 @@
 
 from django.http import HttpResponse, HttpResponseRedirect 
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.db.models import Sum, Aggregate
 from datetime import datetime 
 from crowd_surfer.models import * 
 from django import forms 
@@ -9,6 +9,8 @@ from crowd_surfer.forms import *
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm 
+from django.db.models import Q
+import datetime
 
 from django.urls import reverse 
 
@@ -60,20 +62,68 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
-
-
-
 def project_show(request, id):
+    project = Project.objects.get(pk=id)
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
-    context = {'project': Project.objects.get(pk=id), 'form': reward_form, 'rewards': rewards}
+    donations = Donation.objects
+    total_donations = Donation.objects.all().aggregate(Sum('amount'))
+    funding_end_date = project.funding_end_date 
+    delta = datetime.datetime(funding_end_date.year, funding_end_date.month, funding_end_date.day) - datetime.datetime.now()
+
+    context = {
+        'project': project,
+        'form': reward_form,
+        'rewards': rewards, 
+        'total_donations': total_donations['amount__sum'], 
+        'delta': delta,
+        'comment_form': CommentForm(), 
+        'comments' : Comment.objects.filter(project_id=project.id)
+        }
+
     return render(request, 'project.html', context)
 
+@login_required
+def profile_show(request, id):
+    projects = Project.objects.filter(owner_id=id)
+    backers = Project.backers
+    donations = Donation.objects.filter(reward__project__owner_id=id)
+    total_donations = Donation.objects.filter(reward__project__backers=id).aggregate(Sum('amount'))
 
-def user_profile(request, id):
-    return render(request, 'profile.html')
+    total_recieved = 0 
+    for donation in donations:
+        total_recieved += donation.amount 
+
+    return render(request, 'profile.html', { 
+        'projects': projects, 
+        'backers': backers,
+        'project_donations': donations,
+        'donations': total_donations,
+        'total_recieved' : total_recieved,
+    })
     
+def profiles(request): 
+    users = User.objects.all()
+    projects = Project.objects.all() 
+    context = { 
+        'users': users, 
+        'projects': projects, 
+      
+    }
+    return render(request, 'profiles.html', context)
 
+def profile_search(request): 
+    query = request.GET['query']
+    search_results = User.objects.filter(username__icontains=query).first() 
+    context = { 
+        'picture': search_results, 
+        'query': query,
+    }
+    try: 
+        return redirect(reverse('profile_show', args=[search_results.id]))
+    except: 
+        return redirect('users/profiles')
+   
 def project_create(request):
     if request.method == 'GET':
         context = {'form': ProjectForm(), 'action': '/projects/create'}
@@ -84,13 +134,27 @@ def project_create(request):
             new_proj = form.save(commit=False)
             new_proj.owner = request.user
             new_proj.save()
+            form.save_m2m()
             return redirect(reverse('project_show', args=[new_proj.pk]))
         else:
             context = {'form': form}
             return render(request, 'form.html', context)
 
 def back_project(request, id):
-    return redirect(reverse('project_create', args=['article.id']))
+    if request.method == 'GET':
+        project_title = Reward.objects.filter(pk=id).first().project.title
+        reward = Reward.objects.get(pk=id)
+        context = {'project_title': project_title, 'reward': reward }
+        return render(request, 'back.html', context)
+    elif request.method == 'POST':
+        reward = Reward.objects.get(pk=id)
+        user = User.objects.get(pk=request.user.pk)
+        Donation.objects.create(amount = reward.reward_amount, user = user , reward=reward)
+        Project.objects.get(rewards__pk=id).backers.add(request.user)
+        proj_id = reward.project.pk
+        return redirect(reverse('project_show', args=[proj_id]))
+        # Save reward and user to donations database
+        # redirect to project page
 
 
 def reward_create(request, id):
@@ -103,6 +167,7 @@ def reward_create(request, id):
         return redirect(reverse('project_show', args=[id]))
 
 
+<<<<<<< HEAD
 
 def reward_delete(request, id):
     ids = request.POST.getlist('delete_reward')
@@ -122,3 +187,26 @@ def reward_delete(request, id):
     
 
 
+=======
+@login_required 
+def create_comment(request): 
+    params = request.POST 
+    project_id = params['project']
+    project = get_object_or_404(Project, pk=project_id)
+
+    comment = Comment() 
+    comment.user = request.user
+    comment.text = params['text']
+    comment.project = project
+
+    comment.save()
+
+    return redirect(reverse('project_show', args=[project_id]))
+    
+def search(request):
+    if request.method == 'GET':
+        query = request.GET['query']
+        search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query))
+        context = {'projects': search_results, 'query':query}
+        return render(request, 'search.html', context)
+>>>>>>> 2e9a104f55d12bd16f2b0b7f2628b4e346f4f1b5

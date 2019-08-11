@@ -1,6 +1,42 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{ request.user.username }}
+<div> 
+    
+    {% for project in projects %} 
+        <div class='profile-projects'> 
+            <a href="{% url 'project_show' project.id %}"> 
+            <h3 class='project-title-profile'> {{project.title }} <h3> 
+            <li>Funding Goal: $ {{project.funding_goal}}</li> 
+            <li>Funding Date: {{project.funding_start_date}} - {{project.funding_end_date}} </li> 
+            </a>
+            <br /> 
+            <li>Backer Usernames:</li> 
+            <br /> 
+            {% for backer in project.backers.all %}
+                 <li> <a class='profiles-users' href="{% url 'profile_show' backer.id %}">  {{backer}}  </a></li> 
+            {% endfor %}
+        </div> 
+    {% endfor %}
+
+    
+</div> 
+<div class='backed_projects_profile profile-projects'> 
+    <ul class='profile-donation-list'> 
+
+        <h4> Backers for your project: </h4> 
+        {% for donation in project_donations %}
+            <li class='projects-backed'>  Project Name: {{ donation.reward.project.title }} <li>
+            <li> Project donater: {{ donation.user }} </li> 
+            <li> Donation Amount: {{donation.amount}} </li> 
+            <br /> 
+        {% endfor %}
+        <li class='total-donations'> Total recieved: $ {{ total_recieved }} </li> 
+        <li class='total-donations'> Total donated on other projects: $ {{ donations.amount__sum }} </li> 
+    </ul> 
+</div> 
+
+
 
 {% endblock %}
+

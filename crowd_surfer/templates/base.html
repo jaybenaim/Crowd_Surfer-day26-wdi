@@ -34,6 +34,13 @@
                         {% else %}
                             <li><a href="{% url 'profiles' %}" > Profiles </a></li> 
                         {% endif %}
+                        <form class="search-form" action="{% url 'profile_search' %}" method="get"> 
+                            <label for="picture-search"> 
+                                <span>Search: </span> 
+                                <input type='search' id="user-search" name="query" value="{{ query }}" />
+                            </label>
+                            <input type="submit" value="Search" />
+                        </form> 
 
                     </ul>
                 </div>

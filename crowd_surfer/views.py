@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm 
 from django.db.models import Q
+import datetime
+
 from django.urls import reverse 
 
 def root(request): 
@@ -60,25 +62,66 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
-
-
-
 def project_show(request, id):
+    project = Project.objects.get(pk=id)
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
     donations = Donation.objects
     total_donations = Donation.objects.all().aggregate(Sum('amount'))
-    context = {'project': Project.objects.get(pk=id), 'form': reward_form, 'rewards': rewards, 'total_donations': total_donations['amount__sum']}
+    funding_end_date = project.funding_end_date 
+    delta = datetime.datetime(funding_end_date.year, funding_end_date.month, funding_end_date.day) - datetime.datetime.now()
+
+    context = {
+        'project': project,
+        'form': reward_form,
+        'rewards': rewards, 
+        'total_donations': total_donations['amount__sum'], 
+        'delta': delta,
+        }
+
     return render(request, 'project.html', context)
 
-
-def user_profile(request, id):
+@login_required
+def profile_show(request, id):
     projects = Project.objects.filter(owner_id=id)
+    backers = Project.backers
+    donations = Donation.objects.filter(reward__project__owner_id=id)
+    total_donations = Donation.objects.filter(reward__project__backers=id).aggregate(Sum('amount'))
+
+    total_recieved = 0 
+    for donation in donations:
+        total_recieved += donation.amount 
+
     return render(request, 'profile.html', { 
-        'projects': projects 
+        'projects': projects, 
+        'backers': backers,
+        'project_donations': donations,
+        'donations': total_donations,
+        'total_recieved' : total_recieved,
     })
     
+def profiles(request): 
+    users = User.objects.all()
+    projects = Project.objects.all() 
+    context = { 
+        'users': users, 
+        'projects': projects, 
+      
+    }
+    return render(request, 'profiles.html', context)
 
+def profile_search(request): 
+    query = request.GET['query']
+    search_results = User.objects.filter(username__icontains=query).first() 
+    context = { 
+        'picture': search_results, 
+        'query': query,
+    }
+    try: 
+        return redirect(reverse('profile_show', args=[search_results.id]))
+    except: 
+        return redirect('users/profiles')
+   
 def project_create(request):
     if request.method == 'GET':
         context = {'form': ProjectForm(), 'action': '/projects/create'}

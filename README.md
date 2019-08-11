@@ -24,7 +24,7 @@
 2. ~~As a backer, I want to be able to find other projects owned by that same person~~
 3. As a user I should be able to visit my profile page and see a list of all the projects I have backed, the total amount I have pledged on the site, and a list of all the projects I own
 4. As a user, I should be able to visit a different user's profile and see their bio and a list of projects they own
-5. As a project owner, I want to see how many people have funded my project at each reward
+5. ~~As a project owner, I want to see how many people have funded my project at each reward~~
 6. As a project owner, I would like the ability to set limits on how many people can fund at certain rewards
 
 ## Iteration 4

@@ -9,6 +9,7 @@ from crowd_surfer.forms import *
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm 
+from django.db.models import Q
 import datetime
 
 from django.urls import reverse 
@@ -133,6 +134,7 @@ def project_create(request):
             new_proj = form.save(commit=False)
             new_proj.owner = request.user
             new_proj.save()
+            form.save_m2m()
             return redirect(reverse('project_show', args=[new_proj.pk]))
         else:
             context = {'form': form}
@@ -180,3 +182,9 @@ def create_comment(request):
 
     return redirect(reverse('project_show', args=[project_id]))
     
+def search(request):
+    if request.method == 'GET':
+        query = request.GET['query']
+        search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query))
+        context = {'projects': search_results, 'query':query}
+        return render(request, 'search.html', context)

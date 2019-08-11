@@ -1,7 +1,7 @@
-main{
+main {
     display: block;
     box-sizing: content-box;
-    width:100%;
+    width: 100%;
     max-width: 100%;
     height: 100%;
 }
@@ -9,114 +9,112 @@ nav {
     background-color: grey;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 4em;
-    overflow: scroll; 
+    grid-template-rows: 5em;
+    overflow: hidden;
 }
-nav ul{
+nav ul {
     list-style: none;
     white-space: nowrap;
 }
 
-nav ul li{
+nav ul li {
     display: inline-block;
     font-size: 1.5em;
     margin-left: 2%;
-    margin-right: 2%
+    margin-right: 2%;
 }
 
-nav ul li a:hover{
+nav ul li a:hover {
     border-bottom: 1px solid black;
 }
 
-nav ul li a{
+nav ul li a {
     text-decoration: none;
     color: black;
 }
 
-.nav-left{
+.nav-left {
     height: 100%;
     grid-column-start: 1;
     display: grid;
     grid-template-columns: 4em auto;
 }
 
-.menu-wrap{
+.menu-wrap {
     grid-column-start: 2;
     display: inline-block;
     width: 80%;
 }
 
-.nav-right{
+.nav-right {
     display: flexbox;
     align-content: flex-end;
     height: 100%;
     grid-column-start: 2;
-
 }
 
-.logo{
+.logo {
     grid-column-start: 1;
     height: 4em;
-    width: 4em
+    width: 4em;
 }
-.logo img{
+.logo img {
     max-width: 100%;
     max-height: 100%;
 }
 
-.login-wrap{
-    width:80%;
+.login-wrap {
+    width: 80%;
     float: right;
 }
 
-.login-bar{
+.login-bar {
     box-sizing: border-box;
 }
-.search-form { 
-    margin-bottom: 20px; 
+.search-form {
+    margin-bottom: 20px;
 }
 
 main {
-    margin-top: 0px; 
-    background: url("https://www.bucketlist127.com/uploads/images/88ee4d1424e74e7175b1b55da5501d6f.jpg");
-    background-size: cover; 
-    height: 1000px; 
-    width: 100%; 
-    background-repeat: no-repeat; 
+    margin-top: 0px;
+    background: url('https://www.bucketlist127.com/uploads/images/88ee4d1424e74e7175b1b55da5501d6f.jpg');
+    background-size: cover;
+    height: 1000px;
+    width: 100%;
+    background-repeat: no-repeat;
 }
 
-.project:hover { 
-    cursor: pointer; 
+.project:hover {
+    cursor: pointer;
 }
 
 .form-container {
-    color: white;    
+    color: white;
     border: 1px solid grey;
     border-radius: 9px;
     padding: 10px;
-    margin: 10px; 
-    background: rgba(0, 0, 0, 0.7); 
-    text-align: center; 
-    padding-bottom: 100px; 
-    
+    margin: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    padding-bottom: 100px;
 }
 
-.project-container { 
-    margin-top: 0; 
-    width: 100%; 
-    height: 100%; 
-    color: white; 
-    text-align: center; 
+.project-container {
+    margin-top: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: center;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
-.project-page { 
-    padding-top: 30px; 
+.project-page {
+    padding-top: 30px;
 }
-.create-project { 
-    padding-top: 50px; 
+.create-project {
+    padding-top: 50px;
 }
 
 li.project {
@@ -125,8 +123,8 @@ li.project {
     border-radius: 9px;
     width: 200px;
     padding: 10px;
-    margin: 10px; 
-    background: rgba(0, 0, 0, 0.7); 
+    margin: 10px;
+    background: rgba(0, 0, 0, 0.7);
 }
 
 li.project > a {
@@ -134,60 +132,88 @@ li.project > a {
     text-decoration: none;
 }
 
-
-.profile-name, .profile-projects { 
+.profile-name,
+.profile-projects {
     list-style: none;
     border: 1px solid grey;
     border-radius: 9px;
-    margin-top: 10px; 
-    margin-left: 2px; 
+    margin-top: 10px;
+    margin-left: 2px;
     /* width: 80%;  */
     padding: 10px;
-    padding-right: 50px; 
-    background: rgba(0, 0, 0, 0.7); 
-    color: white; 
-    text-align: center; 
-    display: flex; 
-    justify-content: center; 
+    padding-right: 50px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
-.profile-projects li, .profile-projects h3 { 
-    color: white; 
+.profile-projects li,
+.profile-projects h3 {
+    color: white;
     text-decoration: none;
 }
 
-.backers { 
-    color: white; 
-    background: black; 
-    width: 100%; 
-    height: 80px; 
+.backers {
+    color: white;
+    background: black;
+    width: 100%;
+    height: 80px;
 }
-.back-project-button { 
-    color: red; 
-    font-size: 32px; 
-    border: 2px solid gray; 
-    border-radius: 15px; 
-    padding: 5px; 
-    width: 100%; 
+.back-project-button {
+    color: red;
+    font-size: 32px;
+    border: 2px solid gray;
+    border-radius: 15px;
+    padding: 5px;
+    width: 100%;
 }
 
-.profiles-users { 
+.profiles-users {
     text-decoration: none;
-    color: white; 
+    color: white;
+}
+.project-title-profile {
+    background: rga(0, 0, 0, 0.9);
+    border: 1px lightgray solid;
+    border-radius: 4%;
+    padding: 10px;
+    margin-right: 40px;
+}
 
+#search_box {
+    width: 6em;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid grey;
+    border-radius: 5px;
 }
-.project-title-profile { 
-    background: rga(0,0,0, 0.9);
-    border: 1px lightgray solid; 
-    border-radius: 4%; 
-    padding: 10px; 
-    margin-right: 40px; 
 
+#search_submit {
+    border: 1px solid grey;
+    border-radius: 5px;
+    color: white;
+    padding: 2px 8px 2px 8px;
+    background: rgba(0, 0, 0, 0.7);
 }
-.total-donations { 
-    list-style: none; 
-    font-size: 40px; 
+
+.total-donations {
+    list-style: none;
+    font-size: 40px;
 }
-.profile-donation-list { 
+.profile-donation-list {
+    list-style: none;
+}
+
+.tag {
+    display: inline-block;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 2px 8px 2px 8px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+
+.taglist {
     list-style: none;
 }

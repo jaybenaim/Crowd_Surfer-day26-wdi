@@ -80,18 +80,23 @@ def project_show(request, id):
 
     return render(request, 'project.html', context)
 
+@login_required
 def profile_show(request, id):
     projects = Project.objects.filter(owner_id=id)
     backers = Project.backers
-    # projects_back = Project.objects.filter(backers=id)
-    projects_backed = Donation.objects.filter(reward__project__backers=id)
+    donations = Donation.objects.filter(reward__project__owner_id=id)
     total_donations = Donation.objects.filter(reward__project__backers=id).aggregate(Sum('amount'))
+
+    total_recieved = 0 
+    for donation in donations:
+        total_recieved += donation.amount 
 
     return render(request, 'profile.html', { 
         'projects': projects, 
         'backers': backers,
-        'projects_backed': projects_backed,
+        'project_donations': donations,
         'donations': total_donations,
+        'total_recieved' : total_recieved,
     })
     
 def profiles(request): 

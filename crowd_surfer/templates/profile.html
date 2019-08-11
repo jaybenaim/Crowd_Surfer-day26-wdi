@@ -2,6 +2,7 @@
 
 {% block content %}
 <div> 
+    
     {% for project in projects %} 
         <div class='profile-projects'> 
             <a href="{% url 'project_show' project.id %}"> 
@@ -17,14 +18,25 @@
             {% endfor %}
         </div> 
     {% endfor %}
+
+    
 </div> 
 <div class='backed_projects_profile profile-projects'> 
-    <ul> 
-        {% for project in projects_backed %}
-            <li class='projects-backed'> {{ project.user }} {{ project. }} {{project.amount}} </li> 
+    <ul class='profile-donation-list'> 
+
+        <h4> Backers for your project: </h4> 
+        {% for donation in project_donations %}
+            <li class='projects-backed'>  Project Name: {{ donation.reward.project.title }} <li>
+            <li> Project donater: {{ donation.user }} </li> 
+            <li> Donation Amount: {{donation.amount}} </li> 
+            <br /> 
         {% endfor %}
-        <li class='total-donations'> Total donated: ${{donations.amount__sum}} </li> 
+        <li class='total-donations'> Total recieved: $ {{ total_recieved }} </li> 
+        <li class='total-donations'> Total donated on other projects: $ {{ donations.amount__sum }} </li> 
     </ul> 
 </div> 
+
+
+
 {% endblock %}
 

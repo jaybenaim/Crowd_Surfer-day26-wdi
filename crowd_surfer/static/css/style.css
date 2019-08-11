@@ -184,3 +184,6 @@ li.project > a {
     list-style: none; 
     font-size: 40px; 
 }
+.profile-donation-list { 
+    list-style: none;
+}

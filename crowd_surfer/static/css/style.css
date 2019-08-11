@@ -135,12 +135,17 @@ li.project {
 .project-description-hidden:hover { 
     color: white; 
 }
-
 li.project:hover { 
-    height: 5em; 
-    width: 9em; 
+    animation-name: grow; 
+    animation-duration: 5s; 
+    animation-iteration-count: 1; 
 }
-
+@keyframes grow { 
+    50% { 
+        height: 5em; 
+        width: 9em; 
+    }
+}
 li.project > a {
     color: white;
     text-decoration: none;

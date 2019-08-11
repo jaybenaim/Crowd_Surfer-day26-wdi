@@ -202,6 +202,10 @@ def search(request):
     if request.method == 'GET':
         query = request.GET['query']
         search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query))
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2f06b2c45b4c0f4b1631dae29d1ab36d92eab069
         result_categories = []
         result_tags = []
         for project in search_results:
@@ -235,3 +239,7 @@ def search_refine(request):
     context = {'projects': search_results, 'query':query, 'categories': result_categories, 'tags':result_tags}
     return render(request, 'search.html', context)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2f06b2c45b4c0f4b1631dae29d1ab36d92eab069

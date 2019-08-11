@@ -20,5 +20,7 @@ urlpatterns = [
     path('search/', search, name='search'),
     path('search-refine/', search_refine, name="search_refine"),
     path('profile/search', profile_search, name="profile_search"), 
+    path('profile/search', profile_search, name="profile_search"),
     path('comments/create', create_comment, name='create_comment'),
-]
+    ]
+

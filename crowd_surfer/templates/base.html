@@ -1,4 +1,5 @@
 {% load static %}
+{% load crowd_surfer_tags %}
 <!DOCTYPE html>
 
 <head>
@@ -19,6 +20,8 @@
                     <ul class="menu">
                         <li> <a class="home-button" href="/">Home</a> </li>
                         <li><a href="{% url 'project_create' %}">Create a new Project</a></li>
+                        <li><a href="{% url 'categories' %}">All Categories</a></li>
+                        
                         <li>
 
                         <form action="{% url 'search' %}" method="GET" >

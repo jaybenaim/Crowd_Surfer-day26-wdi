@@ -229,3 +229,24 @@ li.project > a {
     margin: 10px; 
     background: rgba(0, 0, 0, 0.7);  
 }
+
+.category-container{
+    width:14em;
+    display:inline-block;
+    box-sizing: border-box;
+    color: white;    
+    border: 1px solid grey;
+    border-radius: 9px;
+    padding: 10px;
+    margin: 10px; 
+    background: rgba(0, 0, 0, 0.7);
+    text-align: center;  
+}
+
+.category-container a{
+    color: white; 
+}
+
+.category-container a:hover {
+    cursor: pointer;
+}

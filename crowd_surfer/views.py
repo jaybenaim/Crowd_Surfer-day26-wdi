@@ -235,3 +235,24 @@ def search_refine(request):
     context = {'projects': search_results, 'query':query, 'categories': result_categories, 'tags':result_tags}
     return render(request, 'search.html', context)
 
+def categories(request):
+    context = {}
+    categories = []
+    for choice_tuple in cat_choices:
+        if choice_tuple[1] != '-----':
+            categories.append(choice_tuple[1])
+    context['categories'] = categories
+    total_projects_by_category = {}
+    for category in categories:
+        num_projects_by_category = len(Project.objects.filter(category__icontains=category))
+        total_projects_by_category[category] = num_projects_by_category
+    context['total_projects'] = total_projects_by_category
+    total_funding_by_category = {}
+    for category in categories:
+        num_funding_by_category = Project.objects.filter(category__icontains=category).aggregate(Sum('rewards__donations__amount'))
+        if num_funding_by_category['rewards__donations__amount__sum'] == None:
+            total_funding_by_category[category] = 0
+    else:
+        total_funding_by_category[category] = num_funding_by_category['rewards__donations__amount__sum']
+    context['funding'] = total_funding_by_category
+    return render(request, 'categories.html', context)

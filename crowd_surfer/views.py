@@ -169,7 +169,7 @@ def reward_create(request, id):
 def create_comment(request): 
     params = request.POST 
     project_id = params['project']
-    project = Project.objects.get(pk=project_id)
+    project = get_object_or_404(Project, pk=project_id)
 
     comment = Comment() 
     comment.user = request.user
@@ -180,4 +180,3 @@ def create_comment(request):
 
     return redirect(reverse('project_show', args=[project_id]))
     
-

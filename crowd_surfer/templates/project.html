@@ -41,7 +41,7 @@
     <br /> 
     <ul> <h5> Comments: </h5> 
         {% for comment in comments %}
-            <li>{{comment.text}} - {{comment.date}}(<span><a href="{% url 'comment_edit' comment.id %}">Edit</a></span> | <span><a href="{% url 'comment_delete' comment.id %}"Delete</span>)</li>
+            <li>{{comment.text}} - {{comment.date}}(<span><a href="{% url 'comment_edit' co_id=comment.id pro_id=project.id %}">Edit</a></span> | <span><a href="{% url 'comment_delete' comment.id %}"Delete</span>)</li>
 
         {% endfor %}
     </ul> 

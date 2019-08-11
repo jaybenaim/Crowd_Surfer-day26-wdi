@@ -20,6 +20,9 @@ urlpatterns = [
          reward_delete, name="reward_delete"),
     path('rewards/<int:id>/back', back_project, name='back_project'),
     path('search/', search, name='search'),
+    path('search-refine/', search_refine, name="search_refine"),
+    path('profile/search', profile_search, name="profile_search"), 
     path('profile/search', profile_search, name="profile_search"),
     path('comments/create', create_comment, name='create_comment'),
-]
+    ]
+

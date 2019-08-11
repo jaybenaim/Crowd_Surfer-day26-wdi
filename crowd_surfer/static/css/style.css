@@ -217,3 +217,15 @@ li.project > a {
 .taglist {
     list-style: none;
 }
+
+.refine-bar{
+    width:8em;
+    box-sizing: border-box;
+    color: white;    
+    border: 1px solid grey;
+    border-radius: 9px;
+    padding: 10px;
+    margin: 10px; 
+    background: rgba(0, 0, 0, 0.7);  
+}
+

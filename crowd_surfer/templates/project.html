@@ -15,7 +15,11 @@
     <p>TIME UNTIL FUNDING DATE: {{delta.days}} DAYS </p> 
     <p> {{ funding_end_date }}</p> 
     <p>Total Amount Pledged To Date: ${{ total_donations }}</p>
-    
+    {% for tag in project.tags.all %}
+    <u class="tag-list">
+        <li class="tag">{{tag}}</li>
+    </ul>
+    {% endfor %}
     <ul>
         {% for reward in rewards %}
         <li> 

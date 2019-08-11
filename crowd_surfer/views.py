@@ -132,6 +132,7 @@ def project_create(request):
             new_proj = form.save(commit=False)
             new_proj.owner = request.user
             new_proj.save()
+            form.save_m2m()
             return redirect(reverse('project_show', args=[new_proj.pk]))
         else:
             context = {'form': form}

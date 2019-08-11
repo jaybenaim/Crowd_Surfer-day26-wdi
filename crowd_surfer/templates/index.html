@@ -11,6 +11,7 @@
             {% for project in projects %}
                 <li class='project'>
                     <a href="{% url 'project_show' project.id %}"> {{ project.title }}</a>
+                    <p class='project-description-hidden'> {{project.description}} </p> 
                 </li> 
             {% endfor %}
         </ul> 

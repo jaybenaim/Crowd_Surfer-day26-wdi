@@ -14,7 +14,7 @@
 7. ~~As a project owner, I shouldn't be able to back my own project.~~
 ## Iteration 2
 1. ~~As a user, when I go to a project’s page, it should tell me if I have already backed that project or not~~
-2. As a user, when I go to a project’s page, it should tell me how much time is left until the funding deadline
+2. ~~As a user, when I go to a project’s page, it should tell me how much time is left until the funding deadline~~
 3. ~~As a user, when viewing a project, I want to see the total amount of money pledged so far~~
 4. As a backer, I want to see all of the projects that I have backed
 5. As a backer, I want to see the total amount of money I have spent on projects

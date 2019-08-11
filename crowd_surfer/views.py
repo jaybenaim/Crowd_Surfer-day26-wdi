@@ -9,6 +9,7 @@ from crowd_surfer.forms import *
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm 
+import datetime
 
 from django.urls import reverse 
 
@@ -61,28 +62,30 @@ def signup_create(request):
         return render(request, 'registration/signup.html', {'form': form})
 
 def project_show(request, id):
+    project = Project.objects.get(pk=id)
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
     donations = Donation.objects
     total_donations = Donation.objects.all().aggregate(Sum('amount'))
-    context = {'project': Project.objects.get(pk=id), 'form': reward_form, 'rewards': rewards, 'total_donations': total_donations['amount__sum']}
-    return render(request, 'project.html', context)
+    funding_end_date = project.funding_end_date 
+    delta = datetime.datetime(funding_end_date.year, funding_end_date.month, funding_end_date.day) - datetime.datetime.now()
 
+    context = {
+        'project': project,
+        'form': reward_form,
+        'rewards': rewards, 
+        'total_donations': total_donations['amount__sum'], 
+        'delta': delta,
+        }
+
+    return render(request, 'project.html', context)
 
 def profile_show(request, id):
     projects = Project.objects.filter(owner_id=id)
-    projects_backed = 0
-    project_counter = 0
-    funding = 0
-
-    for project in projects: 
-        project_counter += 1
-        
-
+    backers = Project.backers
     return render(request, 'profile.html', { 
         'projects': projects, 
-        'project_counter': project_counter,
-        
+        'backers': backers,
     })
     
 def profiles(request): 
@@ -97,9 +100,6 @@ def profiles(request):
 
 def profile_search(request): 
     query = request.GET['query']
-     # objects.get will throw an error if it doesnt find any results. depending on what your're 
-     # trying to do using filter, and .first() (assuming you only want one result)
-     # is a much more common practice
     search_results = User.objects.filter(username__icontains=query).first() 
     context = { 
         'picture': search_results, 

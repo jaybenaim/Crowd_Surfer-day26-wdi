@@ -5,20 +5,13 @@
                 <span>Search: </span> 
                 <input type='search' id="user-search" name="query" value="{{ query }}" />
             </label>
-
             <input type="submit" value="Search" />
         </form> 
-    <p> {{request.user.profile}}
-    </p>
+    <p> {{request.user.profile}}</p>
     <ul class="form-container"> 
-
+    <h2>Profiles: </h2> 
         {% for user in users %}
-            <li> <a class='profiles-users' href="{% url 'profile_show' user.id %}"> Username: {{user}}  </a></li> 
-            <span> Bio </span>
-
+            <li> <a class='profiles-users' href="{% url 'profile_show' user.id %}"> {{user}} </a></li> <br /> 
         {% endfor %}
-       
-      
-        
     </ul>
 {% endblock %}

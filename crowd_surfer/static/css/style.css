@@ -175,4 +175,8 @@ li.project > a {
 .project-title-profile { 
     background: rga(0,0,0, 0.9);
     border: 1px lightgray solid; 
+    border-radius: 4%; 
+    padding: 10px; 
+    margin-right: 40px; 
+
 }

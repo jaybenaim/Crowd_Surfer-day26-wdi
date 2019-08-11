@@ -180,3 +180,7 @@ li.project > a {
     margin-right: 40px; 
 
 }
+.total-donations { 
+    list-style: none; 
+    font-size: 40px; 
+}

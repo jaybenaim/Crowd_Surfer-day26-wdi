@@ -83,9 +83,15 @@ def project_show(request, id):
 def profile_show(request, id):
     projects = Project.objects.filter(owner_id=id)
     backers = Project.backers
+    # projects_back = Project.objects.filter(backers=id)
+    projects_backed = Donation.objects.filter(reward__project__backers=id)
+    total_donations = Donation.objects.filter(reward__project__backers=id).aggregate(Sum('amount'))
+
     return render(request, 'profile.html', { 
         'projects': projects, 
         'backers': backers,
+        'projects_backed': projects_backed,
+        'donations': total_donations,
     })
     
 def profiles(request): 

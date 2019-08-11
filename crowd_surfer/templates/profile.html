@@ -10,16 +10,21 @@
             <li>Funding Date: {{project.funding_start_date}} - {{project.funding_end_date}} </li> 
             </a>
             <br /> 
-            <li>Backers Username:</li> 
+            <li>Backer Usernames:</li> 
             <br /> 
             {% for backer in project.backers.all %}
                  <li> <a class='profiles-users' href="{% url 'profile_show' backer.id %}">  {{backer}}  </a></li> 
             {% endfor %}
-           
-            
         </div> 
     {% endfor %}
-   
+</div> 
+<div class='backed_projects_profile profile-projects'> 
+    <ul> 
+        {% for project in projects_backed %}
+            <li class='projects-backed'> {{ project.user }} {{ project. }} {{project.amount}} </li> 
+        {% endfor %}
+        <li class='total-donations'> Total donated: ${{donations.amount__sum}} </li> 
+    </ul> 
 </div> 
 {% endblock %}
 

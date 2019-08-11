@@ -31,7 +31,7 @@
 1. ~~As a project owner, to help people find my project, I want the ability to add it to a category~~
 2. ~~Projects should only belong to a single category~~
 3. ~~As a project owner, to help people find my project, I want the ability to add various tags to my project~~
-4. As a backer, I want to be able to see all projects in a particular category
+4. ~~As a backer, I want to be able to see all projects in a particular category~~
 5. As a backer, I want the ability to see all the projects associated with a particular tag
 
 ## Iteration 5
@@ -47,7 +47,7 @@
 ## Story Backlog
 * ~~As a user, I want to be able to search for project by name or description using keywords (not just tags and categories)~~
 * As a user, I would like to see how many projects have been funded in a particular category
-* As a user, I would like to see how much money has been raised for a particular category
+* ~~As a user, I would like to see how much money has been raised for a particular category~~
 * As a project owner I should be able to post updates on the progress of my project.
 * As a backer, when I go to the page of a project I have backed, I should see all the updates from the owner in reverse chronological order
 * As a user, when I go to the page of a fully funded project that is past its deadline that I have not backed, I should only see updates about that project from before the funding deadline. Updates for funded projects that were made after funding ended are for backers’ (and the owner’s) eyes only.

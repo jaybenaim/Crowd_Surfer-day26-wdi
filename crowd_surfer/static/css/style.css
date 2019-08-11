@@ -72,6 +72,10 @@ nav ul li a{
 .login-bar{
     box-sizing: border-box;
 }
+.search-form { 
+    margin-bottom: 20px; 
+}
+
 main {
     margin-top: 0px; 
     background: url("https://www.bucketlist127.com/uploads/images/88ee4d1424e74e7175b1b55da5501d6f.jpg");

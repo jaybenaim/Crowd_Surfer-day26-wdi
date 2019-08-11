@@ -31,3 +31,8 @@ class RewardForm(ModelForm):
         model= Reward
         fields = ['reward_item', 'reward_description', 'reward_amount', 'reward_limit']
 
+class CommentForm(ModelForm): 
+    class Meta: 
+        model = Comment 
+        fields = ['text']
+        

@@ -76,6 +76,8 @@ def project_show(request, id):
         'rewards': rewards, 
         'total_donations': total_donations['amount__sum'], 
         'delta': delta,
+        'comment_form': CommentForm(), 
+        'comments' : Comment.objects.filter(project_id=project.id)
         }
 
     return render(request, 'project.html', context)
@@ -162,4 +164,20 @@ def reward_create(request, id):
         reward.save()
         return redirect(reverse('project_show', args=[id]))
 
+
+@login_required 
+def create_comment(request): 
+    params = request.POST 
+    project_id = params['project']
+    project = Project.objects.get(pk=project_id)
+
+    comment = Comment() 
+    comment.user = request.user
+    comment.text = params['text']
+    comment.project = project
+
+    comment.save()
+
+    return redirect(reverse('project_show', args=[project_id]))
+    
 

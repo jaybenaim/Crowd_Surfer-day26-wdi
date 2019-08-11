@@ -30,7 +30,7 @@
 ## Iteration 4
 1. ~~As a project owner, to help people find my project, I want the ability to add it to a category~~
 2. ~~Projects should only belong to a single category~~
-3. As a project owner, to help people find my project, I want the ability to add various tags to my project
+3. ~~As a project owner, to help people find my project, I want the ability to add various tags to my project~~
 4. As a backer, I want to be able to see all projects in a particular category
 5. As a backer, I want the ability to see all the projects associated with a particular tag
 

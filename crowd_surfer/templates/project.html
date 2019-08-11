@@ -42,6 +42,25 @@
         <input type="submit" value="submit">
     </form>
     {% endif %} 
+
+    <br /> 
+    <ul> <h5> Comments: </h5> 
+        {% for comment in comments %}
+            <li>{{comment.text}} - {{comment.date}}</li>
+
+        {% endfor %}
+    </ul> 
+    {% if request.username == project.backers.username %}
+    <form class='comment-form' action="{% url 'create_comment' %}" method="POST"> 
+        {% csrf_token %}
+        <input type='hidden' name='project' value="{{ project.pk }}" > 
+        <label for='form-text' name='form-text'> Comment: </label>
+        {{ comment_form.text }}
+        <input class="comment-form-submit" type="submit" name="submit" value="Submit" > 
+    </form> 
+    {% endif %}
+
 </div> 
+
 
 {% endblock %}

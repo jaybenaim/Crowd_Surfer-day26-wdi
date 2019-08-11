@@ -77,6 +77,8 @@ def project_show(request, id):
         'rewards': rewards, 
         'total_donations': total_donations['amount__sum'], 
         'delta': delta,
+        'comment_form': CommentForm(), 
+        'comments' : Comment.objects.filter(project_id=project.id)
         }
 
     return render(request, 'project.html', context)
@@ -165,6 +167,37 @@ def reward_create(request, id):
         return redirect(reverse('project_show', args=[id]))
 
 
+def reward_delete(request, id):
+    ids = request.POST.getlist('delete_reward')
+    for reward_id in ids:
+        reward = Reward.objects.get(pk=reward_id)
+        reward.delete()
+
+    return redirect(reverse('project_show', args=[id]))
+    
+    
+    
+    # for reward_id in ids:
+    #     print(reward_id)
+    #     reward = Reward.objects.get(pk=reward_id)
+    #     reward.delete()
+    
+
+@login_required 
+def create_comment(request): 
+    params = request.POST 
+    project_id = params['project']
+    project = get_object_or_404(Project, pk=project_id)
+
+    comment = Comment() 
+    comment.user = request.user
+    comment.text = params['text']
+    comment.project = project
+
+    comment.save()
+
+    return redirect(reverse('project_show', args=[project_id]))
+    
 def search(request):
     if request.method == 'GET':
         query = request.GET['query']
@@ -201,3 +234,4 @@ def search_refine(request):
                 result_tags.append(tag)
     context = {'projects': search_results, 'query':query, 'categories': result_categories, 'tags':result_tags}
     return render(request, 'search.html', context)
+

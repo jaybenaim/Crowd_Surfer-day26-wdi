@@ -184,10 +184,39 @@ li.project > a {
     margin-right: 40px; 
 
 }
+
+#search_box{
+    width: 6em;
+    background: rgba(255, 255, 255, 0.5); 
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+#search_submit{
+    border: 1px solid grey;
+    border-radius: 5px;
+    color:white;
+    padding: 2px 8px 2px 8px;
+    background: rgba(0, 0, 0, 0.7);
+}
+
 .total-donations { 
     list-style: none; 
     font-size: 40px; 
 }
 .profile-donation-list { 
+    list-style: none;
+}
+
+.tag{
+    display: inline-block;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 2px 8px 2px 8px;
+    background: rgba(0, 0, 0, 0.7); 
+    color:white;
+}
+
+.taglist{
     list-style: none;
 }

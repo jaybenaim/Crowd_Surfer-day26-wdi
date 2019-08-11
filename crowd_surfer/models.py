@@ -31,7 +31,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) 
     project = models.ForeignKey(Project, on_delete=models.CASCADE) 
     date = models.DateTimeField(auto_now=True) 
-    text = models.TextField() 
+    text = models.CharField(max_length=255)
 
 class Donation(models.Model): 
     amount = models.PositiveIntegerField() 

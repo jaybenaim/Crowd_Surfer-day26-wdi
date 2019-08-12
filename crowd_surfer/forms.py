@@ -1,21 +1,24 @@
 import datetime as dt
 from datetime import datetime, timedelta
 from django.core.exceptions import ValidationError
-from django.forms import  CharField, DateField, DateInput, EmailField, Form, IntegerField, ModelChoiceField, ModelForm, PasswordInput, Textarea, TextInput, TimeField, TimeInput, URLField
+from django.forms import  Select, NumberInput, ChoiceField, CharField, DateField, DateInput, EmailField, Form, IntegerField, ModelChoiceField, ModelForm, PasswordInput, Textarea, TextInput, TimeField, TimeInput, URLField
 from crowd_surfer.models import * 
 from django.forms import ModelForm 
 from django import forms 
 
+cat_choices = [('-----', '-----'),('Games','Games'), ('Music', 'Music'), ('Apparel', 'Apparel'), ('Random', 'Random'), ('Arts','Arts'), ('Tech' ,'Tech')]
 
 class ProjectForm(ModelForm):
-    title = CharField(widget=TextInput(attrs={'class' : 'proj_title'}))
-    description = CharField(widget=Textarea(attrs={'class' : 'proj_desc'}))
-    funding_start_date = DateField(widget=DateInput(attrs={'type': 'date', 'min': dt.date.today(), 'class': 'fund_start_date' }))
-    funding_end_date = DateField(widget=DateInput(attrs={'type': 'date', 'min': dt.date.today(), 'class': 'fund_end_date' }))
+    title = CharField(widget=TextInput(attrs={'class' : 'form-title'}))
+    description = CharField(widget=Textarea(attrs={'class' : 'form-description'}))
+    funding_goal = IntegerField(widget=NumberInput(attrs={'class' : 'form-funding-goal'}))
+    funding_start_date = DateField(widget=DateInput(attrs={'type': 'date', 'min': dt.date.today(), 'class': 'form-funding-start-date' }))
+    funding_end_date = DateField(widget=DateInput(attrs={'type': 'date', 'min': dt.date.today(), 'class': 'form-funding-end-date' }))
+    category = ChoiceField(choices=cat_choices, widget=forms.Select(attrs={'class':'form-category'}))
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'funding_goal', 'funding_start_date', 'funding_end_date']
+        fields = ['title', 'description','category', 'funding_goal', 'funding_start_date', 'funding_end_date', 'tags']
     
     def clean(self):
         cleaned_data = super().clean()
@@ -31,3 +34,8 @@ class RewardForm(ModelForm):
         model= Reward
         fields = ['reward_item', 'reward_description', 'reward_amount', 'reward_limit']
 
+class CommentForm(ModelForm): 
+    class Meta: 
+        model = Comment 
+        fields = ['text']
+        

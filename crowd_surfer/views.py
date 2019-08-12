@@ -1,7 +1,7 @@
 
 from django.http import HttpResponse, HttpResponseRedirect 
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.db.models import Sum, Aggregate
 from datetime import datetime 
 from crowd_surfer.models import * 
 from django import forms 
@@ -9,7 +9,9 @@ from crowd_surfer.forms import *
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm 
-
+from django.db.models import Q
+import datetime
+import pdb
 from django.urls import reverse 
 
 def root(request): 
@@ -60,24 +62,68 @@ def signup_create(request):
     else: 
         return render(request, 'registration/signup.html', {'form': form})
 
-
-
-
 def project_show(request, id):
+    project = Project.objects.get(pk=id)
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
     donations = Donation.objects
-    context = {'project': Project.objects.get(pk=id), 'form': reward_form, 'rewards': rewards}
+    total_donations = Donation.objects.all().aggregate(Sum('amount'))
+    funding_end_date = project.funding_end_date 
+    delta = datetime.datetime(funding_end_date.year, funding_end_date.month, funding_end_date.day) - datetime.datetime.now()
+
+    context = {
+        'project': project,
+        'form': reward_form,
+        'rewards': rewards, 
+        'total_donations': total_donations['amount__sum'], 
+        'delta': delta,
+        'comment_form': CommentForm(), 
+        'comments' : Comment.objects.filter(project_id=project.id)
+        }
+
     return render(request, 'project.html', context)
 
-
-def user_profile(request, id):
+@login_required
+def profile_show(request, id):
     projects = Project.objects.filter(owner_id=id)
+    backers = Project.backers
+    donations = Donation.objects.filter(reward__project__owner_id=id)
+    total_donations = Donation.objects.filter(reward__project__backers=id).aggregate(Sum('amount'))
+
+    total_recieved = 0 
+    for donation in donations:
+        total_recieved += donation.amount 
+
     return render(request, 'profile.html', { 
-        'projects': projects 
+        'projects': projects, 
+        'backers': backers,
+        'project_donations': donations,
+        'donations': total_donations,
+        'total_recieved' : total_recieved,
     })
     
+def profiles(request): 
+    users = User.objects.all()
+    projects = Project.objects.all() 
+    context = { 
+        'users': users, 
+        'projects': projects, 
+      
+    }
+    return render(request, 'profiles.html', context)
 
+def profile_search(request): 
+    query = request.GET['query']
+    search_results = User.objects.filter(username__icontains=query).first() 
+    context = { 
+        'picture': search_results, 
+        'query': query,
+    }
+    try: 
+        return redirect(reverse('profile_show', args=[search_results.id]))
+    except: 
+        return redirect('users/profiles')
+   
 def project_create(request):
     if request.method == 'GET':
         context = {'form': ProjectForm(), 'action': '/projects/create'}
@@ -88,6 +134,7 @@ def project_create(request):
             new_proj = form.save(commit=False)
             new_proj.owner = request.user
             new_proj.save()
+            form.save_m2m()
             return redirect(reverse('project_show', args=[new_proj.pk]))
         else:
             context = {'form': form}
@@ -120,3 +167,92 @@ def reward_create(request, id):
         return redirect(reverse('project_show', args=[id]))
 
 
+def reward_delete(request, id):
+    ids = request.POST.getlist('delete_reward')
+    for reward_id in ids:
+        reward = Reward.objects.get(pk=reward_id)
+        reward.delete()
+
+    return redirect(reverse('project_show', args=[id]))
+    
+    
+    
+    # for reward_id in ids:
+    #     print(reward_id)
+    #     reward = Reward.objects.get(pk=reward_id)
+    #     reward.delete()
+    
+
+@login_required 
+def create_comment(request): 
+    params = request.POST 
+    project_id = params['project']
+    project = get_object_or_404(Project, pk=project_id)
+
+    comment = Comment() 
+    comment.user = request.user
+    comment.text = params['text']
+    comment.project = project
+
+    comment.save()
+
+    return redirect(reverse('project_show', args=[project_id]))
+    
+def search(request):
+    if request.method == 'GET':
+        query = request.GET['query']
+        search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query))
+        result_categories = []
+        result_tags = []
+        for project in search_results:
+            if project.category not in result_categories:
+                result_categories.append(project.category)
+            for tag in project.tags.names():
+                if tag not in result_tags:
+                    result_tags.append(tag)
+        context = {'projects': search_results, 'query':query, 'categories': result_categories, 'tags':result_tags}
+        return render(request, 'search.html', context)
+
+def search_refine(request):
+    query = request.method == 'GET'
+    query = request.GET['query']
+    result_categories = []
+    result_tags = []
+    category_list = request.GET.getlist('category_check')
+    tag_list = request.GET.getlist('tag_check')
+    search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query))
+    if len(category_list) != 0:
+        search_results = search_results.filter(category__in=category_list)
+    if len(tag_list) != 0:
+        search_results = search_results.filter(tags__name__in=tag_list)
+
+    for project in search_results:
+        if project.category not in result_categories:
+            result_categories.append(project.category)
+        for tag in project.tags.names():
+            if tag not in result_tags:
+                result_tags.append(tag)
+    context = {'projects': search_results, 'query':query, 'categories': result_categories, 'tags':result_tags}
+    return render(request, 'search.html', context)
+
+def categories(request):
+    context = {}
+    categories = []
+    for choice_tuple in cat_choices:
+        if choice_tuple[1] != '-----':
+            categories.append(choice_tuple[1])
+    context['categories'] = categories
+    total_projects_by_category = {}
+    for category in categories:
+        num_projects_by_category = len(Project.objects.filter(category__icontains=category))
+        total_projects_by_category[category] = num_projects_by_category
+    context['total_projects'] = total_projects_by_category
+    total_funding_by_category = {}
+    for category in categories:
+        num_funding_by_category = Project.objects.filter(category__icontains=category).aggregate(Sum('rewards__donations__amount'))
+        if num_funding_by_category['rewards__donations__amount__sum'] == None:
+            total_funding_by_category[category] = 0
+    else:
+        total_funding_by_category[category] = num_funding_by_category['rewards__donations__amount__sum']
+    context['funding'] = total_funding_by_category
+    return render(request, 'categories.html', context)

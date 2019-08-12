@@ -56,3 +56,8 @@ class Donation(models.Model):
     reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name="donations")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
 
+class Update(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="updates")
+    date = models.DateTimeField(auto_now=True) 
+    text = models.CharField(max_length=255)
+

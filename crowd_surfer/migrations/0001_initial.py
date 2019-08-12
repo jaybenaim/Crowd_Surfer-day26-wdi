@@ -11,8 +11,8 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('taggit', '0003_taggeditem_add_unique_index'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -29,6 +29,15 @@ class Migration(migrations.Migration):
                 ('backers', models.ManyToManyField(related_name='projects_backed', to=settings.AUTH_USER_MODEL)),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ('tags', taggit.managers.TaggableManager(help_text='A comma-separated list of tags.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='Tags')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Update',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('date', models.DateTimeField(auto_now=True)),
+                ('text', models.CharField(max_length=255)),
+                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='updates', to='crowd_surfer.Project')),
             ],
         ),
         migrations.CreateModel(

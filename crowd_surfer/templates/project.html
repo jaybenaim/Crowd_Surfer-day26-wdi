@@ -104,17 +104,7 @@
 
 
     {% if request.user == project.owner %}
-<<<<<<< HEAD
-    <ul> 
-        <h5> Updates: </h5>
-        {% for update in updates %}
-        <li>{{update.text}} - {{update.date}}</li>
-        {% endfor %}
-    </ul>
-    <form class='update-form' action="{% url 'create_update' %}" method="POST"> 
-=======
     <form class='update-form' action="{% url 'create_comment' %}" method="POST"> 
->>>>>>> master
         {% csrf_token %}
         <input type='hidden' name='project' value="{{ project.pk }}" > 
         <label for='form-text' name='form-text'> Update: </label>

@@ -66,18 +66,13 @@ def project_show(request, id):
     project = Project.objects.get(pk=id)
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
-    donations = Donation.objects
-    total_donations = Donation.objects.all().aggregate(Sum('amount'))
+    total_donations = Donation.objects.filter(reward__project__pk=id).aggregate(Sum('amount'))
+    if total_donations['amount__sum'] == None:
+        total_donations['amount__sum']=0
     funding_end_date = project.funding_end_date 
     delta = datetime.datetime(funding_end_date.year, funding_end_date.month, funding_end_date.day) - datetime.datetime.now()
-    if project.is_funded() == True and project.is_expired() == True:
-        status = 'Complete'
-    elif project.is_funded()== True and project.is_expired() == False:
-        status = 'Backed'
-    elif project.is_funded()== False and project.is_expired() == True:
-        status = 'Expired'
-    else:
-        status = 'Running'
+    
+    status = project_status(project)
 
     context = {
         'project': project,
@@ -267,3 +262,15 @@ def categories(request):
     context['funding'] = total_funding_by_category
     
     return render(request, 'categories.html', context)
+
+
+def project_status(project):
+    if project.is_funded() == True and project.is_expired() == True:
+        status = 'Complete'
+    elif project.is_funded()== True and project.is_expired() == False:
+        status = 'Backed'
+    elif project.is_funded()== False and project.is_expired() == True:
+        status = 'Expired'
+    else:
+        status = 'Running'
+    return status

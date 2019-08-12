@@ -19,7 +19,9 @@
                 <div class="menu-wrap">
                     <ul class="menu">
                         <li> <a class="home-button" href="/">Home</a> </li>
+                        {% if request.user.is_authenticated %}
                         <li><a href="{% url 'project_create' %}">Create a new Project</a></li>
+                        {% endif %}
                         <li><a href="{% url 'categories' %}">All Categories</a></li>
                         
                         <li>

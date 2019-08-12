@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load crowd_surfer_tags %}
 {% block content %}
 <div> 
     
@@ -9,6 +9,7 @@
             <h3 class='project-title-profile'> {{project.title }} <h3> 
             <li>Funding Goal: $ {{project.funding_goal}}</li> 
             <li>Funding Date: {{project.funding_start_date}} - {{project.funding_end_date}} </li> 
+            <li>Project Status: {{ project_status|keyvalue:project.title }} </li>
             </a>
             <br /> 
             <li>Backer Usernames:</li> 

@@ -7,7 +7,19 @@
 </div>
 {% endif %}
 <div class='form-container project-page'> 
-        <h3> Owner: {{project.owner.username}} </h3>
+    {% if status == 'Complete' %}
+        <h2> This project has met it's funding goal </h2>
+    {% elif status == 'Backed' %}
+        <h2> This project has met it's funding goal, but is still running </h2>
+        <h2> You can still back this project </h2>
+    {% elif status == 'Expired' %}
+        <h2> This project has expired, it did not meet it's funding goal </h2>
+    {% else %}
+        <h2> This project is still running </h2>
+    {% endif %}
+
+
+    <h3> Owner: {{project.owner.username}} </h3>
     <h1>{{project.title}}</h1>
     <h4>{{project.category}}</h4>
     <p> {{project.description}}</p>

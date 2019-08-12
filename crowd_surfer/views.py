@@ -70,6 +70,14 @@ def project_show(request, id):
     total_donations = Donation.objects.all().aggregate(Sum('amount'))
     funding_end_date = project.funding_end_date 
     delta = datetime.datetime(funding_end_date.year, funding_end_date.month, funding_end_date.day) - datetime.datetime.now()
+    if project.is_funded() == True and project.is_expired() == True:
+        status = 'Complete'
+    elif project.is_funded()== True and project.is_expired() == False:
+        status = 'Backed'
+    elif project.is_funded()== False and project.is_expired() == True:
+        status = 'Expired'
+    else:
+        status = 'Running'
 
     context = {
         'project': project,
@@ -78,7 +86,8 @@ def project_show(request, id):
         'total_donations': total_donations['amount__sum'], 
         'delta': delta,
         'comment_form': CommentForm(), 
-        'comments' : Comment.objects.filter(project_id=project.id)
+        'comments' : Comment.objects.filter(project_id=project.id),
+        'status': status
         }
 
     return render(request, 'project.html', context)
@@ -108,8 +117,8 @@ def profiles(request):
     context = { 
         'users': users, 
         'projects': projects, 
-      
     }
+
     return render(request, 'profiles.html', context)
 
 def profile_search(request): 
@@ -243,16 +252,18 @@ def categories(request):
             categories.append(choice_tuple[1])
     context['categories'] = categories
     total_projects_by_category = {}
+    total_funding_by_category = {}
+
     for category in categories:
         num_projects_by_category = len(Project.objects.filter(category__icontains=category))
         total_projects_by_category[category] = num_projects_by_category
-    context['total_projects'] = total_projects_by_category
-    total_funding_by_category = {}
-    for category in categories:
         num_funding_by_category = Project.objects.filter(category__icontains=category).aggregate(Sum('rewards__donations__amount'))
         if num_funding_by_category['rewards__donations__amount__sum'] == None:
             total_funding_by_category[category] = 0
-    else:
-        total_funding_by_category[category] = num_funding_by_category['rewards__donations__amount__sum']
+        else:
+            total_funding_by_category[category] = num_funding_by_category['rewards__donations__amount__sum']
+
+    context['total_projects'] = total_projects_by_category
     context['funding'] = total_funding_by_category
+    
     return render(request, 'categories.html', context)

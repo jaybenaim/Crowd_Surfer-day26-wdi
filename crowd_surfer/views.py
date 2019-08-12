@@ -23,7 +23,10 @@ def home(request):
     for project in all_projects:
         if project.is_funded() == True:
             funded_projects += 1
-    percent_funded= round(funded_projects/len(all_projects)*100,2)
+    if len(all_projects) != 0:
+        percent_funded= round(funded_projects/len(all_projects)*100,2)
+    else:
+        percent_funded = 0
     context = {'projects': all_projects, 'funded_projects': funded_projects, 'percent_funded': percent_funded }
     return render(request, 'index.html', context)
     
@@ -112,7 +115,7 @@ def profile_show(request, id):
         'backers': backers,
         'project_donations': donations,
         'donations': total_donations,
-        'total_recieved' : total_recieved,
+        'total_recieved' : total_recieved, 
         'project_status': proj_status,
     })
     

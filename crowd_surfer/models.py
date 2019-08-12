@@ -20,7 +20,9 @@ class Project(models.Model):
     funding_goal = models.PositiveIntegerField()
     backers= models.ManyToManyField(User, related_name="projects_backed")
     tags = TaggableManager()
-
+    def __str__(self):
+        return self.title
+    
     def is_expired(self):
         if self.funding_end_date < datetime.date(datetime.today()):
             return True

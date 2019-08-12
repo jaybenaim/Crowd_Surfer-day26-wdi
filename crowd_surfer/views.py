@@ -278,7 +278,7 @@ def search_refine(request):
     if len(category_list) != 0:
         search_results = search_results.filter(category__in=category_list)
     if len(tag_list) != 0:
-        search_results = search_results.filter(tags__name__in=tag_list)
+        search_results = search_results.filter(tags__name__in=tag_list).distinct()
 
     for project in search_results:
         if project.category not in result_categories:

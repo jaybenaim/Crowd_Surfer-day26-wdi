@@ -11,7 +11,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm 
 from django.db.models import Q
 import datetime
-
+import pdb
 from django.urls import reverse 
 
 def root(request): 
@@ -167,7 +167,10 @@ def reward_create(request, id):
         return redirect(reverse('project_show', args=[id]))
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4e758ed2536e8332af457297cf8c4283eb8a8230
 def reward_delete(request, id):
     ids = request.POST.getlist('delete_reward')
     for reward_id in ids:
@@ -178,14 +181,16 @@ def reward_delete(request, id):
     
     
     
-    
     # for reward_id in ids:
     #     print(reward_id)
     #     reward = Reward.objects.get(pk=reward_id)
     #     reward.delete()
     
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4e758ed2536e8332af457297cf8c4283eb8a8230
 @login_required 
 def create_comment(request): 
     params = request.POST 
@@ -200,10 +205,98 @@ def create_comment(request):
     comment.save()
 
     return redirect(reverse('project_show', args=[project_id]))
-    
+   
+@login_required    
+def edit_comment(request, id):
+    comment_to_edit = Comment.objects.get(pk=id)
+    form = CommentForm(request.POST, instance=comment_to_edit)
+    if request.method == 'GET':
+        context = {'form': form, 'action': f'/comments/{id}/edit'}
+        return render(request, 'form.html', context)
+    else:
+        form.save()
+        action = f'/comments/{comment_to_edit.pk}/update'
+        context = {'comment': comment_to_edit, 'form': form, "message": "Edit Comment", 'action': action}
+        return redirect(reverse('project_show', args=[comment_to_edit.project.id]))
+
+
+@login_required
+def update_comment(request, id):
+    params = request.POST 
+    project_id = params['project']
+    comment_to_update = Comment.objects.get(pk=id)
+    form = CommentForm(instance=comment_to_update)
+    form.save()
+    return redirect(reverse('project_show', args=[project_id]))
+
+
+@login_required
+def delete_comment(request, id):
+    params = request.POST 
+    project_id = params['project']
+    comment_to_del = Comment.objects.get(pk=id)
+    comment_to_del.delete()
+    return redirect(reverse('project_show', args=[project_id]))
+
+
 def search(request):
     if request.method == 'GET':
         query = request.GET['query']
         search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query)|Q(category__icontains=query))
-        context = {'projects': search_results, 'query':query}
+        result_categories = []
+        result_tags = []
+        for project in search_results:
+            if project.category not in result_categories:
+                result_categories.append(project.category)
+            for tag in project.tags.names():
+                if tag not in result_tags:
+                    result_tags.append(tag)
+        context = {'projects': search_results, 'query':query, 'categories': result_categories, 'tags':result_tags}
         return render(request, 'search.html', context)
+<<<<<<< HEAD
+=======
+
+def search_refine(request):
+    query = request.method == 'GET'
+    query = request.GET['query']
+    result_categories = []
+    result_tags = []
+    category_list = request.GET.getlist('category_check')
+    tag_list = request.GET.getlist('tag_check')
+    search_results = Project.objects.filter(Q(title__icontains=query)|Q(description__icontains=query))
+    if len(category_list) != 0:
+        search_results = search_results.filter(category__in=category_list)
+    if len(tag_list) != 0:
+        search_results = search_results.filter(tags__name__in=tag_list)
+
+    for project in search_results:
+        if project.category not in result_categories:
+            result_categories.append(project.category)
+        for tag in project.tags.names():
+            if tag not in result_tags:
+                result_tags.append(tag)
+    context = {'projects': search_results, 'query':query, 'categories': result_categories, 'tags':result_tags}
+    return render(request, 'search.html', context)
+
+def categories(request):
+    context = {}
+    categories = []
+    for choice_tuple in cat_choices:
+        if choice_tuple[1] != '-----':
+            categories.append(choice_tuple[1])
+    context['categories'] = categories
+    total_projects_by_category = {}
+    for category in categories:
+        num_projects_by_category = len(Project.objects.filter(category__icontains=category))
+        total_projects_by_category[category] = num_projects_by_category
+    context['total_projects'] = total_projects_by_category
+    total_funding_by_category = {}
+    for category in categories:
+        num_funding_by_category = Project.objects.filter(category__icontains=category).aggregate(Sum('rewards__donations__amount'))
+        if num_funding_by_category['rewards__donations__amount__sum'] == None:
+            total_funding_by_category[category] = 0
+    else:
+        total_funding_by_category[category] = num_funding_by_category['rewards__donations__amount__sum']
+    context['funding'] = total_funding_by_category
+    return render(request, 'categories.html', context)
+>>>>>>> 4e758ed2536e8332af457297cf8c4283eb8a8230

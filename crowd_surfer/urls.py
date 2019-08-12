@@ -14,12 +14,17 @@ urlpatterns = [
     path('users/profiles', profiles, name='profiles'),
     path('projects/create', project_create, name='project_create'),
     path('projects/<int:id>', project_show, name='project_show'),
-    path('projects/<int:id>/rewards/create',
-         reward_create, name="reward_create"),
-    path('projects/<int:id>/rewards/delete',
-         reward_delete, name="reward_delete"),
+    path('projects/<int:id>/rewards/create',reward_create, name="reward_create"),
+    path('projects/<int:id>/rewards/delete',reward_delete, name="reward_delete"),
     path('rewards/<int:id>/back', back_project, name='back_project'),
     path('search/', search, name='search'),
+    path('search-refine/', search_refine, name="search_refine"),
+    path('profile/search', profile_search, name="profile_search"), 
     path('profile/search', profile_search, name="profile_search"),
     path('comments/create', create_comment, name='create_comment'),
-]
+    path('categories/', categories, name="categories"),
+    path('comments/<int:id>/delete', delete_comment, name="delete_comment"),
+    path('comments/<int:id>/edit', edit_comment, name='edit_comment'),
+    path('comments/<int:id>/update', update_comment, name='update_comment'),
+    ]
+

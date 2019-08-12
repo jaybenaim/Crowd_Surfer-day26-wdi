@@ -2,17 +2,44 @@
 
 {% block content %}
 
-<main>
     <div class="background-img">
-        <ul class='project-container'> 
+        <ul class="project-container"> 
             {% for project in projects %}
-                <li class='project'>
-                    <a href="{% url 'project_show' project.id %}"> {{ project.title }}</a>
+                <li class="project">
+                    <a href="{% url "project_show" project.id %}"> {{ project.title }}</a>
+                    <p class='project-description-hidden'> {{project.description}} </p> 
                 </li> 
             {% endfor %}
+            {% if not projects%}
+                <li class="project">
+                    We're sorry, your search returned no results
+                </li>
+            {% endif %}
         </ul> 
-    </div> 
-</main>
+    </div>
+
+    <div class="refine-bar">
+        <form action="{% url "search_refine" %}" method="GET">
+            <input type="hidden" value="{{query}}" name="query" >
+        <div class="category-refine">
+            <h4>Categories</h4>
+            {% for category in categories %}
+                <input type="checkbox" value="{{category}}" name="category_check">{{category}}<br>
+            {% endfor %}
+        </div>
+        <div class="tag-refine">
+                <h4>Tags</h4>
+                {% for tag in tags %}
+                    
+                    <input type="checkbox" value="{{tag}}" name="tag_check">{{tag}}<br>
+                    
+                {% endfor %}            
+                <input type="submit" name="Submit" value="Refine Results">
+        </form>
+
+        </div>
+    </div>
+
 
 {% endblock content %}
 

@@ -11,7 +11,7 @@ from taggit.managers import TaggableManager
 class Project(models.Model): 
     title = models.CharField(max_length=255) 
     description = models.TextField()
-    category = models.CharField(max_length=63) 
+    category = models.CharField(max_length=255) 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     funding_start_date = models.DateField() 
     funding_end_date = models.DateField()
@@ -37,4 +37,9 @@ class Donation(models.Model):
     amount = models.PositiveIntegerField() 
     reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name="donations")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
+
+class Update(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="updates")
+    date = models.DateTimeField(auto_now=True) 
+    text = models.CharField(max_length=255)
 

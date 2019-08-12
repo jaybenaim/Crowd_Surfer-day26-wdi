@@ -3,10 +3,12 @@ from django.forms import ModelForm
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from datetime import date 
+from datetime import date, datetime
 from django import forms 
 from django.contrib.auth.models import User 
 from taggit.managers import TaggableManager
+from django.db.models import Sum, Aggregate
+
 
 class Project(models.Model): 
     title = models.CharField(max_length=255) 
@@ -18,6 +20,22 @@ class Project(models.Model):
     funding_goal = models.PositiveIntegerField()
     backers= models.ManyToManyField(User, related_name="projects_backed")
     tags = TaggableManager()
+
+    def is_expired(self):
+        if self.funding_end_date < datetime.date(datetime.today()):
+            return True
+        else:
+            return False
+    
+    def is_funded(self):
+        total_funding = Donation.objects.filter(reward__project__pk=self.pk).aggregate(Sum('amount'))
+        if total_funding['amount__sum'] == None:
+            total_funding['amount__sum']=0
+        
+        if self.funding_goal <= total_funding['amount__sum']:
+            return True
+        else:
+            return False
 
 class Reward(models.Model): 
     reward_item = models.CharField(max_length=255)

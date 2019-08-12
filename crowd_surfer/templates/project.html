@@ -41,7 +41,7 @@
         </div>
     </form>
         
-    <p>TIME UNTIL FUNDING DATE: {{delta.days}} DAYS </p> 
+    <p>TIME UNTIL FUNDING END DATE: {{delta.days}} DAYS </p> 
     <p> {{ funding_end_date }}</p> 
     <p>Total Amount Pledged To Date: ${{ total_donations }} of ${{ project.funding_goal }}</p>
     {% for tag in project.tags.all %}
@@ -90,7 +90,6 @@
                 <input type="submit" name="submit" value="Delete">
             </form>
             {% endif %}
-
         {% endfor %}
     </ul> 
     <form class='comment-form' action="{% url 'create_comment' %}" method="POST"> 
@@ -102,19 +101,15 @@
     </form> 
     {% endif %}
 
-
-    {% if request.user == project.owner %}
-<<<<<<< HEAD
     <ul> 
         <h5> Updates: </h5>
         {% for update in updates %}
         <li>{{update.text}} - {{update.date}}</li>
         {% endfor %}
     </ul>
+    {% if request.user == project.owner %}
     <form class='update-form' action="{% url 'create_update' %}" method="POST"> 
-=======
     <form class='update-form' action="{% url 'create_comment' %}" method="POST"> 
->>>>>>> master
         {% csrf_token %}
         <input type='hidden' name='project' value="{{ project.pk }}" > 
         <label for='form-text' name='form-text'> Update: </label>

@@ -23,7 +23,6 @@ urlpatterns = [
     path('profile/search', profile_search, name="profile_search"),
     path('comments/create', create_comment, name='create_comment'),
     path('updates/create', create_update, name='create_update'),
-    path('categories/', categories, name="categories")
     path('categories/', categories, name="categories"),
     path('comments/<int:id>/delete', delete_comment, name="delete_comment"),
     path('comments/<int:id>/edit', edit_comment, name='edit_comment'),

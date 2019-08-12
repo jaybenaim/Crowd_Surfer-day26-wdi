@@ -132,6 +132,10 @@ li.project {
 .project-description-hidden { 
     color: transparent; 
 }
+@media (min-width: 10px){ 
+    .project-description-hidden { 
+        color:  transparent; 
+}
 .project-description-hidden:hover { 
     color: white; 
 }

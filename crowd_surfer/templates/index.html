@@ -10,8 +10,9 @@
         <ul class='project-container'> 
             {% for project in projects %}
                 <li class='project'>
-                    <a href="{% url 'project_show' project.id %}"> {{ project.title }}</a>
+                    <a href="{% url 'project_show' project.id %}"> {{ project.title }}
                     <p class='project-description-hidden'> {{project.description}} </p> 
+                    </a>
                 </li> 
             {% endfor %}
         </ul> 
@@ -21,3 +22,4 @@
 {% endblock content %}
 
 
+can only add one tag ... 

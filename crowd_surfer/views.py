@@ -18,9 +18,14 @@ def root(request):
     return redirect('home/')
     
 def home(request): 
-    return render(request, 'index.html', {
-        'projects': Project.objects.all() 
-    })
+    all_projects = Project.objects.all()
+    funded_projects = 0
+    for project in all_projects:
+        if project.is_funded() == True:
+            funded_projects += 1
+    percent_funded= round(funded_projects/len(all_projects)*100,2)
+    context = {'projects': all_projects, 'funded_projects': funded_projects, 'percent_funded': percent_funded }
+    return render(request, 'index.html', context)
     
 def login_view(request):
     if request.user.is_authenticated:

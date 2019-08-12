@@ -126,8 +126,30 @@ li.project {
     padding: 10px;
     margin: 10px;
     background: rgba(0, 0, 0, 0.7);
+    height: 2em; 
 }
 
+.project-description-hidden { 
+    color: transparent; 
+}
+@media (min-width: 10px){ 
+    .project-description-hidden { 
+        color:  transparent; 
+}
+.project-description-hidden:hover { 
+    color: white; 
+}
+li.project:hover { 
+    animation-name: grow; 
+    animation-duration: 5s; 
+    animation-iteration-count: 1; 
+}
+@keyframes grow { 
+    50% { 
+        height: 5em; 
+        width: 9em; 
+    }
+}
 li.project > a {
     color: white;
     text-decoration: none;

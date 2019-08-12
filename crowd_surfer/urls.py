@@ -22,6 +22,7 @@ urlpatterns = [
     path('profile/search', profile_search, name="profile_search"), 
     path('profile/search', profile_search, name="profile_search"),
     path('comments/create', create_comment, name='create_comment'),
+    path('updates/create', create_update, name='create_update'),
     path('categories/', categories, name="categories")
     ]
 

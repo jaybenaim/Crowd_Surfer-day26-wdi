@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 {% load crowd_surfer_tags %}
 {% block content %}
+{% load static %}
 
     {% for category in categories %}
     <div class="category-container">
         <h2> <a href="/search/?query={{category}}">{{ category }}</a> </h2>
+        <div class='category-logo-wrap'>
+        <img class = "category-logo" src="{% static 'img/'|add:category.lower|add:'.png' %}" alt="">
+        </div>
         <p> Number of projects: {{ total_projects|keyvalue:category }}</p>
         <p> Category funding: ${{ funding|keyvalue:category }}</p>
     </div>

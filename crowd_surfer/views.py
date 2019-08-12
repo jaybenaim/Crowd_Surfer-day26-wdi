@@ -66,10 +66,13 @@ def project_show(request, id):
     project = Project.objects.get(pk=id)
     reward_form = RewardForm()
     rewards = Project.objects.filter(pk=id).first().rewards.order_by('-reward_amount')
-    donations = Donation.objects
-    total_donations = Donation.objects.all().aggregate(Sum('amount'))
+    total_donations = Donation.objects.filter(reward__project__pk=id).aggregate(Sum('amount'))
+    if total_donations['amount__sum'] == None:
+        total_donations['amount__sum']=0
     funding_end_date = project.funding_end_date 
     delta = datetime.datetime(funding_end_date.year, funding_end_date.month, funding_end_date.day) - datetime.datetime.now()
+    
+    status = project_status(project)
 
     context = {
         'project': project,
@@ -81,6 +84,7 @@ def project_show(request, id):
         'comments' : Comment.objects.filter(project_id=project.id),
         'update_form': UpdateForm(), 
         'updates' : Update.objects.filter(project_id=project.id),  
+        'status': status
         }
 
     return render(request, 'project.html', context)
@@ -91,7 +95,9 @@ def profile_show(request, id):
     backers = Project.backers
     donations = Donation.objects.filter(reward__project__owner_id=id)
     total_donations = Donation.objects.filter(reward__project__backers=id).aggregate(Sum('amount'))
-
+    proj_status = {}
+    for project in projects:
+        proj_status[project.title]=project_status(project)
     total_recieved = 0 
     for donation in donations:
         total_recieved += donation.amount 
@@ -102,6 +108,7 @@ def profile_show(request, id):
         'project_donations': donations,
         'donations': total_donations,
         'total_recieved' : total_recieved,
+        'project_status': proj_status,
     })
     
 def profiles(request): 
@@ -110,8 +117,8 @@ def profiles(request):
     context = { 
         'users': users, 
         'projects': projects, 
-      
     }
+
     return render(request, 'profiles.html', context)
 
 def profile_search(request): 
@@ -199,7 +206,40 @@ def create_comment(request):
     comment.save()
 
     return redirect(reverse('project_show', args=[project_id]))
-    
+   
+@login_required    
+def edit_comment(request, id):
+    comment_to_edit = Comment.objects.get(pk=id)
+    form = CommentForm(request.POST, instance=comment_to_edit)
+    if request.method == 'GET':
+        context = {'form': form, 'action': f'/comments/{id}/edit'}
+        return render(request, 'form.html', context)
+    else:
+        form.save()
+        action = f'/comments/{comment_to_edit.pk}/update'
+        context = {'comment': comment_to_edit, 'form': form, "message": "Edit Comment", 'action': action}
+        return redirect(reverse('project_show', args=[comment_to_edit.project.id]))
+
+
+@login_required
+def update_comment(request, id):
+    params = request.POST 
+    project_id = params['project']
+    comment_to_update = Comment.objects.get(pk=id)
+    form = CommentForm(instance=comment_to_update)
+    form.save()
+    return redirect(reverse('project_show', args=[project_id]))
+
+
+@login_required
+def delete_comment(request, id):
+    params = request.POST 
+    project_id = params['project']
+    comment_to_del = Comment.objects.get(pk=id)
+    comment_to_del.delete()
+    return redirect(reverse('project_show', args=[project_id]))
+
+
 def search(request):
     if request.method == 'GET':
         query = request.GET['query']
@@ -243,19 +283,21 @@ def categories(request):
     for choice_tuple in cat_choices:
         if choice_tuple[1] != '-----':
             categories.append(choice_tuple[1])
+    categories.sort()
     context['categories'] = categories
     total_projects_by_category = {}
+    total_funding_by_category = {}
+
     for category in categories:
         num_projects_by_category = len(Project.objects.filter(category__icontains=category))
         total_projects_by_category[category] = num_projects_by_category
-    context['total_projects'] = total_projects_by_category
-    total_funding_by_category = {}
-    for category in categories:
         num_funding_by_category = Project.objects.filter(category__icontains=category).aggregate(Sum('rewards__donations__amount'))
         if num_funding_by_category['rewards__donations__amount__sum'] == None:
             total_funding_by_category[category] = 0
-    else:
-        total_funding_by_category[category] = num_funding_by_category['rewards__donations__amount__sum']
+        else:
+            total_funding_by_category[category] = num_funding_by_category['rewards__donations__amount__sum']
+
+    context['total_projects'] = total_projects_by_category
     context['funding'] = total_funding_by_category
     return render(request, 'categories.html', context)
 
@@ -272,3 +314,17 @@ def create_update(request):
     update.save()
 
     return redirect(reverse('project_show', args=[project_id]))
+    
+    return render(request, 'categories.html', context)
+
+
+def project_status(project):
+    if project.is_funded() == True and project.is_expired() == True:
+        status = 'Complete'
+    elif project.is_funded()== True and project.is_expired() == False:
+        status = 'Backed'
+    elif project.is_funded()== False and project.is_expired() == True:
+        status = 'Expired'
+    else:
+        status = 'Running'
+    return status

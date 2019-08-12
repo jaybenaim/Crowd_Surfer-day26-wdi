@@ -73,7 +73,9 @@
     {% endif %} 
 
     <br /> 
-    <ul> <h5> Comments: </h5> 
+    {% if request.username == project.backers.username %}
+    <ul> 
+        <h5> Comments: </h5> 
         {% for comment in comments %}
             <li>{{comment.text}} - {{comment.date}}</li>
             {% if request.username == comment.username %}
@@ -91,7 +93,6 @@
 
         {% endfor %}
     </ul> 
-    {% if request.username == project.backers.username %}
     <form class='comment-form' action="{% url 'create_comment' %}" method="POST"> 
         {% csrf_token %}
         <input type='hidden' name='project' value="{{ project.pk }}" > 
@@ -101,17 +102,23 @@
     </form> 
     {% endif %}
 
-    <ul> <h5> About my project: </h5>
-    {% for update in updates %}
-    <li>{{update.text}} - {{update.date}}</li>
-    {% endfor %}
-    </ul>
+
     {% if request.user == project.owner %}
+<<<<<<< HEAD
+    <ul> 
+        <h5> Updates: </h5>
+        {% for update in updates %}
+        <li>{{update.text}} - {{update.date}}</li>
+        {% endfor %}
+    </ul>
+    <form class='update-form' action="{% url 'create_update' %}" method="POST"> 
+=======
     <form class='update-form' action="{% url 'create_comment' %}" method="POST"> 
+>>>>>>> master
         {% csrf_token %}
         <input type='hidden' name='project' value="{{ project.pk }}" > 
-        <label for='form-text' name='form-text'> Comment: </label>
-        {{ comment_form.text }}
+        <label for='form-text' name='form-text'> Update: </label>
+        {{ update_form.text }}
         <input class="update-form-submit" type="submit" name="submit" value="Submit" > 
     </form> 
     {% endif %}

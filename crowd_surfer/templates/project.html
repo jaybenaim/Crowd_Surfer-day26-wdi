@@ -54,7 +54,8 @@
         <p>{{reward.reward_item}} </p> 
         <p>{{reward.reward_description}} </p>
         <p>${{reward.reward_amount}} </p>
-        <p>{{reward.reward_limit}} </p>
+        <p> Limited {{ reward.donations.all|length }} left of {{reward.reward_limit}} </p>
+        <p> {{ reward.donations.all|length }} Backers </p>
         {% if request.user not in project.backers.all and request.user != project.owner and status != 'Expired' and status != 'Complete' %}
          <form action="{% url 'back_project' id=reward.pk %}">
         <input type="submit" value="Back Project">
@@ -94,7 +95,7 @@
     {% endfor %}
     </ul>
     {% if request.user == project.owner %}
-    <form class='update-form' action="{% url 'create_update' %}" method="POST"> 
+    <form class='update-form' action="{% url 'create_comment' %}" method="POST"> 
         {% csrf_token %}
         <input type='hidden' name='project' value="{{ project.pk }}" > 
         <label for='form-text' name='form-text'> Comment: </label>

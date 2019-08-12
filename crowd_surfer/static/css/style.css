@@ -272,3 +272,13 @@ li.project > a {
 .category-container a:hover {
     cursor: pointer;
 }
+
+.category-logo-wrap{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.category-logo{
+    max-width: 100%;
+}
+

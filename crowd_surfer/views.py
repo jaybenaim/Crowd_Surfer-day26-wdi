@@ -93,7 +93,9 @@ def profile_show(request, id):
     backers = Project.backers
     donations = Donation.objects.filter(reward__project__owner_id=id)
     total_donations = Donation.objects.filter(reward__project__backers=id).aggregate(Sum('amount'))
-
+    proj_status = {}
+    for project in projects:
+        proj_status[project.title]=project_status(project)
     total_recieved = 0 
     for donation in donations:
         total_recieved += donation.amount 
@@ -104,6 +106,7 @@ def profile_show(request, id):
         'project_donations': donations,
         'donations': total_donations,
         'total_recieved' : total_recieved,
+        'project_status': proj_status,
     })
     
 def profiles(request): 
@@ -245,6 +248,7 @@ def categories(request):
     for choice_tuple in cat_choices:
         if choice_tuple[1] != '-----':
             categories.append(choice_tuple[1])
+    categories.sort()
     context['categories'] = categories
     total_projects_by_category = {}
     total_funding_by_category = {}

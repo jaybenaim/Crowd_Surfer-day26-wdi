@@ -18,7 +18,7 @@
         <p>{{reward.reward_description}} </p>
         <p>${{reward.reward_amount}} </p>
         <p>{{reward.reward_limit}} </p>
-        {% if request.user not in project.backers.all %}
+        {% if request.user not in project.backers.all and request.user != project.owner %}
          <form action="{% url 'back_project' id=reward.pk %}">
         <input type="submit" value="Back Project">
         </form>

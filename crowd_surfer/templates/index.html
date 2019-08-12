@@ -7,8 +7,20 @@
 
 <main>
     
+    <div class="background-img">
+        <ul class='project-container'> 
+            {% for project in projects %}
+                <li class='project'>
+                    <a href="{% url 'project_show' project.id %}"> {{ project.title }}
+                    <p class='project-description-hidden'> {{project.description}} </p> 
+                    </a>
+                </li> 
+            {% endfor %}
+        </ul> 
+    </div> 
 </main>
 
 {% endblock content %}
 
 
+can only add one tag ... 

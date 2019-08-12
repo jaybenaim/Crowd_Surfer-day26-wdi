@@ -44,11 +44,18 @@
     <p>TIME UNTIL FUNDING END DATE: {{delta.days}} DAYS </p> 
     <p> {{ funding_end_date }}</p> 
     <p>Total Amount Pledged To Date: ${{ total_donations }} of ${{ project.funding_goal }}</p>
+    <div class="progress-container" style="width:20%; height: 1em; background-color: white; display: block; margin: 1em auto;">
+    <div class="progress-bar" style="width: {{ progress }}; height: 1em; background-color: blue; position: relative; top: 0; left: 0"></div>
+    </div>
+
+
     {% for tag in project.tags.all %}
     <u class="tag-list">
         <li class="tag">{{tag}}</li>
     </ul>
     {% endfor %}
+
+
     <ul>
         {% for reward in rewards %}
         <li> 
@@ -64,7 +71,7 @@
         </li>
         {% endfor %}
     </ul>
-    {% if request.user == project.owner and status != 'Expired'%} 
+    {% if request.user == project.owner and status != 'Expired' and status != 'Complete' %} 
     <form action="{% url 'reward_create' project.pk %}" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
@@ -109,7 +116,6 @@
     </ul>
     {% if request.user == project.owner %}
     <form class='update-form' action="{% url 'create_update' %}" method="POST"> 
-    <form class='update-form' action="{% url 'create_comment' %}" method="POST"> 
         {% csrf_token %}
         <input type='hidden' name='project' value="{{ project.pk }}" > 
         <label for='form-text' name='form-text'> Update: </label>

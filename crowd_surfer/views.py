@@ -18,9 +18,17 @@ def root(request):
     return redirect('home/')
     
 def home(request): 
-    return render(request, 'index.html', {
-        'projects': Project.objects.all() 
-    })
+    all_projects = Project.objects.all()
+    funded_projects = 0
+    for project in all_projects:
+        if project.is_funded() == True:
+            funded_projects += 1
+    if len(all_projects) != 0:
+        percent_funded= round(funded_projects/len(all_projects)*100,2)
+    else:
+        percent_funded = 0
+    context = {'projects': all_projects, 'funded_projects': funded_projects, 'percent_funded': percent_funded }
+    return render(request, 'index.html', context)
     
 def login_view(request):
     if request.user.is_authenticated:
@@ -71,7 +79,10 @@ def project_show(request, id):
         total_donations['amount__sum']=0
     funding_end_date = project.funding_end_date 
     delta = datetime.datetime(funding_end_date.year, funding_end_date.month, funding_end_date.day) - datetime.datetime.now()
-    
+    if total_donations['amount__sum'] >= project.funding_goal:
+        funding_progress = '100%'
+    else:
+        funding_progress = (str((total_donations['amount__sum']/project.funding_goal)*100)+'%')
     status = project_status(project)
 
     context = {
@@ -84,7 +95,8 @@ def project_show(request, id):
         'comments' : Comment.objects.filter(project_id=project.id),
         'update_form': UpdateForm(), 
         'updates' : Update.objects.filter(project_id=project.id),  
-        'status': status
+        'status': status,
+        'progress' : funding_progress,
         }
 
     return render(request, 'project.html', context)
@@ -107,7 +119,7 @@ def profile_show(request, id):
         'backers': backers,
         'project_donations': donations,
         'donations': total_donations,
-        'total_recieved' : total_recieved,
+        'total_recieved' : total_recieved, 
         'project_status': proj_status,
     })
     
@@ -266,7 +278,7 @@ def search_refine(request):
     if len(category_list) != 0:
         search_results = search_results.filter(category__in=category_list)
     if len(tag_list) != 0:
-        search_results = search_results.filter(tags__name__in=tag_list)
+        search_results = search_results.filter(tags__name__in=tag_list).distinct()
 
     for project in search_results:
         if project.category not in result_categories:

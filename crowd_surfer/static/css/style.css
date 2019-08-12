@@ -155,6 +155,18 @@ li.project > a {
     text-decoration: none;
 }
 
+.sitewide-status{
+    box-sizing: border-box;
+    width:40%;
+    margin: 10px auto;
+    color:white;
+    text-align: center;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 2px 8px 2px 8px;
+    background: rgba(0, 0, 0, 0.7);
+}
+
 .profile-name,
 .profile-projects {
     list-style: none;

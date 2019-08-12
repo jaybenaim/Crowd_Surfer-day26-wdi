@@ -8,6 +8,8 @@
 <main>
     
     <div class="background-img">
+        <h2 class="sitewide-status">Projects Successfully Funded: {{ funded_projects }} </h2>
+        <h2 class="sitewide-status"> Percentage of Projects Funded: {{ percent_funded }}%</h2>
         <ul class='project-container'> 
             {% for project in projects %}
                 <li class='project'>
@@ -18,6 +20,8 @@
             {% endfor %}
         </ul> 
     </div> 
+    <div>
+        
 </main>
 
 {% endblock content %}

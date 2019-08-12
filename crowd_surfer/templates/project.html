@@ -76,6 +76,22 @@
     </form> 
     {% endif %}
 
+    <ul> <h5> About my project: </h5>
+    {% for update in updates %}
+    <li>{{update.text}} - {{update.date}}</li>
+    {% endfor %}
+    </ul>
+    {% if request.user == project.owner %}
+    <form class='update-form' action="{% url 'create_update' %}" method="POST"> 
+        {% csrf_token %}
+        <input type='hidden' name='project' value="{{ project.pk }}" > 
+        <label for='form-text' name='form-text'> Comment: </label>
+        {{ comment_form.text }}
+        <input class="update-form-submit" type="submit" name="submit" value="Submit" > 
+    </form> 
+    {% endif %}
+    
+
 </div> 
 
 

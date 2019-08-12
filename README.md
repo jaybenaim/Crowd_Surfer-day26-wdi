@@ -36,10 +36,10 @@
 
 ## Iteration 5
 1. ~~As a backer, I want to be notified when any projects I am backing meet their goal and are fully funded~~
-2. As a user, I would like to see how many projects have been successfully funded
+2. ~~As a user, I would like to see how many projects have been successfully funded~~
 3. ~~As a user, I would like to see how many total people have funded projects~~
 4. ~~As a user, I would like to see how much money has been raised in total~~
-5. As a user, I would like to see the percentage of funded versus failed projects, site-wide
+5. ~~As a user, I would like to see the percentage of funded versus failed projects, site-wide~~
 
 ## Iteration 6
 1. ~~As a backer, I want to be able to leave comments on a project~~

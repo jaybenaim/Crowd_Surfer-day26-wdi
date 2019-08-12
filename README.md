@@ -32,7 +32,7 @@
 2. ~~Projects should only belong to a single category~~
 3. ~~As a project owner, to help people find my project, I want the ability to add various tags to my project~~
 4. ~~As a backer, I want to be able to see all projects in a particular category~~
-5. As a backer, I want the ability to see all the projects associated with a particular tag
+5. ~~As a backer, I want the ability to see all the projects associated with a particular tag~~
 
 ## Iteration 5
 1. As a backer, I want to be notified when any projects I am backing meet their goal and are fully funded
@@ -42,7 +42,7 @@
 5. As a user, I would like to see the percentage of funded versus failed projects, site-wide
 
 ## Iteration 6
-1. As a backer, I want to be able to leave comments on a project
+1. ~~As a backer, I want to be able to leave comments on a project~~
 
 ## Story Backlog
 * ~~As a user, I want to be able to search for project by name or description using keywords (not just tags and categories)~~

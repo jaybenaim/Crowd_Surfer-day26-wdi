@@ -204,7 +204,8 @@ def create_comment(request):
     comment.save()
 
     return redirect(reverse('project_show', args=[project_id]))
-    
+   
+@login_required    
 def edit_comment(request, id):
     comment_to_edit = Comment.objects.get(pk=id)
     form = CommentForm(request.POST, instance=comment_to_edit)
@@ -218,6 +219,7 @@ def edit_comment(request, id):
         return redirect(reverse('project_show', args=[comment_to_edit.project.id]))
 
 
+@login_required
 def update_comment(request, id):
     params = request.POST 
     project_id = params['project']
@@ -226,6 +228,8 @@ def update_comment(request, id):
     form.save()
     return redirect(reverse('project_show', args=[project_id]))
 
+
+@login_required
 def delete_comment(request, id):
     params = request.POST 
     project_id = params['project']

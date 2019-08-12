@@ -79,7 +79,10 @@ def project_show(request, id):
         total_donations['amount__sum']=0
     funding_end_date = project.funding_end_date 
     delta = datetime.datetime(funding_end_date.year, funding_end_date.month, funding_end_date.day) - datetime.datetime.now()
-    
+    if total_donations['amount__sum'] >= project.funding_goal:
+        funding_progress = '100%'
+    else:
+        funding_progress = (str((total_donations['amount__sum']/project.funding_goal)*100)+'%')
     status = project_status(project)
 
     context = {
@@ -92,7 +95,8 @@ def project_show(request, id):
         'comments' : Comment.objects.filter(project_id=project.id),
         'update_form': UpdateForm(), 
         'updates' : Update.objects.filter(project_id=project.id),  
-        'status': status
+        'status': status,
+        'progress' : funding_progress,
         }
 
     return render(request, 'project.html', context)

@@ -63,6 +63,18 @@
     <ul> <h5> Comments: </h5> 
         {% for comment in comments %}
             <li>{{comment.text}} - {{comment.date}}</li>
+            {% if request.username == comment.username %}
+            <form action="{% url 'edit_comment' comment.id %}" method="GET">
+                {% csrf_token %}
+                <input type='hidden' name='project' value="{{ project.pk }}" > 
+                <input type="submit" name="submit" value="Edit">
+            </form>
+            <form action="{% url 'delete_comment' comment.id %}" method="POST">
+                {% csrf_token %}
+                <input type='hidden' name='project' value="{{ project.pk }}" > 
+                <input type="submit" name="submit" value="Delete">
+            </form>
+            {% endif %}
 
         {% endfor %}
     </ul> 

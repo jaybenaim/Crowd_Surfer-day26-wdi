@@ -198,6 +198,35 @@ def create_comment(request):
 
     return redirect(reverse('project_show', args=[project_id]))
     
+def edit_comment(request, id):
+    comment_to_edit = Comment.objects.get(pk=id)
+    form = CommentForm(request.POST, instance=comment_to_edit)
+    if request.method == 'GET':
+        context = {'form': form, 'action': f'/comments/{id}/edit'}
+        return render(request, 'form.html', context)
+    else:
+        form.save()
+        action = f'/comments/{comment_to_edit.pk}/update'
+        context = {'comment': comment_to_edit, 'form': form, "message": "Edit Comment", 'action': action}
+        return redirect(reverse('project_show', args=[comment_to_edit.project.id]))
+
+
+def update_comment(request, id):
+    params = request.POST 
+    project_id = params['project']
+    comment_to_update = Comment.objects.get(pk=id)
+    form = CommentForm(instance=comment_to_update)
+    form.save()
+    return redirect(reverse('project_show', args=[project_id]))
+
+def delete_comment(request, id):
+    params = request.POST 
+    project_id = params['project']
+    comment_to_del = Comment.objects.get(pk=id)
+    comment_to_del.delete()
+    return redirect(reverse('project_show', args=[project_id]))
+
+
 def search(request):
     if request.method == 'GET':
         query = request.GET['query']

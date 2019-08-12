@@ -167,10 +167,7 @@ def reward_create(request, id):
         return redirect(reverse('project_show', args=[id]))
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 4e758ed2536e8332af457297cf8c4283eb8a8230
 def reward_delete(request, id):
     ids = request.POST.getlist('delete_reward')
     for reward_id in ids:
@@ -187,10 +184,7 @@ def reward_delete(request, id):
     #     reward.delete()
     
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 4e758ed2536e8332af457297cf8c4283eb8a8230
 @login_required 
 def create_comment(request): 
     params = request.POST 
@@ -253,8 +247,6 @@ def search(request):
                     result_tags.append(tag)
         context = {'projects': search_results, 'query':query, 'categories': result_categories, 'tags':result_tags}
         return render(request, 'search.html', context)
-<<<<<<< HEAD
-=======
 
 def search_refine(request):
     query = request.method == 'GET'
@@ -299,4 +291,3 @@ def categories(request):
         total_funding_by_category[category] = num_funding_by_category['rewards__donations__amount__sum']
     context['funding'] = total_funding_by_category
     return render(request, 'categories.html', context)
->>>>>>> 4e758ed2536e8332af457297cf8c4283eb8a8230

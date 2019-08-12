@@ -14,7 +14,11 @@
             <li>Backer Usernames:</li> 
             <br /> 
             {% for backer in project.backers.all %}
+            {% if backer != '' %}
                  <li> <a class='profiles-users' href="{% url 'profile_show' backer.id %}">  {{backer}}  </a></li> 
+            {% else %}
+                <li> There are no backers for this project </li> 
+            {% endif %}
             {% endfor %}
         </div> 
     {% endfor %}

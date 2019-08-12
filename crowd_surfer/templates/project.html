@@ -82,7 +82,7 @@
     {% endfor %}
     </ul>
     {% if request.user == project.owner %}
-    <form class='update-form' action="{% url 'create_update' %}" method="POST"> 
+    <form class='update-form' action="{% url 'create_comment' %}" method="POST"> 
         {% csrf_token %}
         <input type='hidden' name='project' value="{{ project.pk }}" > 
         <label for='form-text' name='form-text'> Comment: </label>

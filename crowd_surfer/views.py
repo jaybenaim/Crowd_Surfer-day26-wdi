@@ -82,6 +82,8 @@ def project_show(request, id):
         'delta': delta,
         'comment_form': CommentForm(), 
         'comments' : Comment.objects.filter(project_id=project.id),
+        'update_form': UpdateForm(), 
+        'updates' : Update.objects.filter(project_id=project.id),  
         'status': status
         }
 
@@ -297,6 +299,21 @@ def categories(request):
 
     context['total_projects'] = total_projects_by_category
     context['funding'] = total_funding_by_category
+    return render(request, 'categories.html', context)
+
+@login_required
+def create_update(request): 
+    params = request.POST 
+    project_id = params['project']
+    project = get_object_or_404(Project, pk=project_id)
+
+    update = Update() 
+    update.text = params['text']
+    update.project = project
+
+    update.save()
+
+    return redirect(reverse('project_show', args=[project_id]))
     
     return render(request, 'categories.html', context)
 

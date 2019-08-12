@@ -1,5 +1,6 @@
 
 {% extends 'base.html' %}
+{% load crowd_surfer_tags %}
 {% block content %}
 {% if request.user in project.backers.all %}
 <div class='backed-header'>
@@ -33,7 +34,7 @@
             <span>{{reward.reward_description}}</span>
             <span>${{reward.reward_amount}} </span>
             <span>{{reward.reward_limit}} </span>
-            <span><input type="checkbox" name="delete_reward" value="{{reward.pk}}"> </input</span>
+            <span><input type="checkbox" name="delete_reward" value="{{reward.pk}}"> </input></span>
             
             {% endfor %}
             <input type="submit" value="DELETE!">
@@ -54,8 +55,7 @@
         <p>{{reward.reward_item}} </p> 
         <p>{{reward.reward_description}} </p>
         <p>${{reward.reward_amount}} </p>
-        <p> Limited {{ reward.donations.all|length }} left of {{reward.reward_limit}} </p>
-        <p> {{ reward.donations.all|length }} Backers </p>
+        <p> Limited: {{ reward.donations.all|length }} claimed of {{reward.reward_limit}} </p>
         {% if request.user not in project.backers.all and request.user != project.owner and status != 'Expired' and status != 'Complete' %}
          <form action="{% url 'back_project' id=reward.pk %}">
         <input type="submit" value="Back Project">
